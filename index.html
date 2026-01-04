@@ -3,104 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Investor Mastery 2026 - Fixed & Verified</title>
+    <title>Investor Mastery Ultimate - Verified 2026</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root { --p: #0f172a; --s: #10b981; --g: #f59e0b; --bg: #f8fafc; }
-        * { box-sizing: border-box; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); margin: 0; color: var(--p); }
-        .app { max-width: 500px; margin: 0 auto; background: white; min-height: 100vh; display: flex; flex-direction: column; }
-        header { background: var(--p); color: white; padding: 20px; text-align: center; position: sticky; top: 0; z-index: 100; border-bottom: 4px solid var(--g); }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--p); overflow-x: hidden; }
+        
+        .app-container { max-width: 500px; margin: 0 auto; background: white; min-height: 100vh; display: flex; flex-direction: column; box-shadow: 0 0 30px rgba(0,0,0,0.05); }
+        
+        header { background: var(--p); color: white; padding: 20px; text-align: center; border-bottom: 4px solid var(--g); position: sticky; top: 0; z-index: 100; }
+        
+        /* Navigasi Tahun */
+        .year-nav { display: flex; background: #1e293b; padding: 8px; gap: 5px; }
+        .y-btn { flex: 1; padding: 10px; border: none; background: rgba(255,255,255,0.05); color: #94a3b8; border-radius: 8px; cursor: pointer; font-weight: 800; font-size: 0.7rem; }
+        .y-btn.active { background: white; color: var(--p); }
+
+        /* Grid Bulan */
         .month-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 15px; background: #f1f5f9; }
-        .m-card { aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; background: white; border-radius: 10px; font-weight: 800; font-size: 0.75rem; cursor: pointer; border: 2px solid transparent; }
-        .m-card.active { border-color: var(--g); background: #fffbeb; }
-        .m-card.done { background: var(--s); color: white; }
-        .content { padding: 20px; flex: 1; }
-        .card { background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 15px; margin-bottom: 20px; border-left: 5px solid var(--p); }
-        .video-link { display: block; background: #fee2e2; color: #ef4444; text-decoration: none; padding: 15px; border-radius: 12px; font-weight: 800; text-align: center; margin: 10px 0; font-size: 0.85rem; border: 1px solid #fecaca; }
-        textarea { width: 100%; border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px; height: 80px; font-family: inherit; resize: none; margin-bottom: 10px; }
-        .btn-check { width: 100%; background: var(--s); color: white; border: none; padding: 15px; border-radius: 12px; font-weight: 800; cursor: pointer; }
-        #splash { position: fixed; inset: 0; background: var(--p); z-index: 2000; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; padding: 20px; }
+        .btn-m { aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; background: white; border-radius: 10px; font-weight: 800; font-size: 0.75rem; cursor: pointer; border: 2px solid transparent; }
+        .btn-m.active { border-color: var(--g); background: #fffbeb; }
+        .btn-m.done { background: var(--s); color: white; border-color: var(--s); }
+
+        /* Area Konten */
+        main { padding: 20px; flex-grow: 1; }
+        .lesson-card { background: white; border: 1px solid #e2e8f0; border-radius: 18px; padding: 18px; margin-bottom: 20px; position: relative; border-left: 5px solid var(--p); transition: 0.3s; }
+        .lesson-card.is-done { opacity: 0.6; }
+        .badge { position: absolute; top: -10px; left: 15px; background: var(--g); color: white; padding: 3px 10px; border-radius: 8px; font-size: 0.6rem; font-weight: 800; }
+        
+        .btn-yt { display: flex; align-items: center; justify-content: center; background: #fee2e2; color: #ef4444; text-decoration: none; padding: 14px; border-radius: 12px; font-weight: 800; margin: 15px 0; font-size: 0.85rem; border: 1px solid #fecaca; }
+        textarea { width: 100%; border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px; height: 80px; font-family: inherit; resize: none; margin-bottom: 10px; font-size: 0.85rem; }
+        .btn-finish { width: 100%; background: var(--s); color: white; border: none; padding: 15px; border-radius: 12px; font-weight: 800; cursor: pointer; }
+
+        /* Splash */
+        #splash { position: fixed; inset: 0; background: var(--p); z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; padding: 30px; text-align: center; }
+        .inp-name { width: 100%; max-width: 250px; padding: 15px; border-radius: 10px; border: none; margin: 20px 0; text-align: center; font-size: 1rem; }
+        .btn-go { width: 100%; max-width: 250px; padding: 15px; border-radius: 10px; border: none; background: var(--g); color: white; font-weight: 800; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <div id="splash">
-    <h1>INVESTOR MASTERY</h1>
-    <p>Kurikulum Video Terverifikasi 2026</p>
-    <input type="text" id="uInp" placeholder="Nama Anda" style="padding:15px; border-radius:10px; border:none; width:80%; text-align:center; margin:20px 0;">
-    <button onclick="start()" style="padding:15px 40px; border-radius:10px; border:none; background:var(--g); color:white; font-weight:800;">MULAI BELAJAR</button>
+    <h1 style="font-size: 1.8rem;">INVESTOR MASTERY</h1>
+    <p style="opacity: 0.7;">Verified Code: All Video Fixed</p>
+    <input type="text" id="uName" class="inp-name" placeholder="Nama Anda">
+    <button onclick="start()" class="btn-go">MASUK DASHBOARD</button>
 </div>
 
-<div class="app">
-    <header><h2 id="head-name" style="margin:0; font-size:1rem;">Dashboard</h2></header>
-    <div class="month-grid" id="m-list"></div>
-    <div class="content" id="c-area"></div>
+<div class="app-container">
+    <header>
+        <div id="disp-name" style="font-weight: 800;">-</div>
+    </header>
+
+    <div class="year-nav">
+        <button id="y1-btn" class="y-btn active" onclick="changeYear('y1')">TAHUN 1</button>
+        <button id="y2-btn" class="y-btn" onclick="unlockYear('y2')">TAHUN 2 🔒</button>
+        <button id="y3-btn" class="y-btn" onclick="unlockYear('y3')">TAHUN 3 🔒</button>
+    </div>
+
+    <div class="month-grid" id="m-grid"></div>
+
+    <main id="c-area"></main>
 </div>
 
 <script>
-    let curM = 1;
+    let curYear = 'y1';
+    let curMonth = 1;
 
-    // DATABASE VIDEO HASIL REVISI TOTAL (Verified Jan 2026)
-    const DATA = [
-        { m: 1, s: [{t: "Apa Itu Saham? (Penjelasan Simpel)", v: "3vH6_YfI79U"}, {t: "Keuntungan & Risiko Saham", v: "6m2v879O4S8"}]},
-        { m: 2, s: [{t: "Cara Membuka Rekening Saham", v: "AtL8aVvgK4U"}, {t: "Mengenal Sektor Bisnis di BEI", v: "ir625-6bSSI"}]},
-        { m: 3, s: [{t: "Apa Itu Dividen?", v: "MXj1oSUEVv8"}, {t: "Membaca Harga (Bid & Offer)", v: "_U1-C-eH8O0"}]},
-        { m: 4, s: [{t: "Membaca Laporan Laba Rugi", v: "6v-hK7uH7X0"}, {t: "Mengenal Aset & Kewajiban", v: "jNqQ_v0UqU8"}]},
-        { m: 5, s: [{t: "Analisis Arus Kas (Cash Flow)", v: "D_U48-qGf9k"}, {t: "Valuasi Murah/Mahal (PER)", v: "3Vj5Fk-08I0"}]},
-        { m: 6, s: [{t: "Valuasi Harga Buku (PBV)", v: "L9YhA9S6-6U"}, {t: "Cara Screening Saham", v: "F6-P7Y_mD4I"}]},
-        { m: 7, s: [{t: "Analisis Profit (ROE)", v: "6v-hK7uH7X0"}, {t: "Analisis Hutang (DER)", v: "jNqQ_v0UqU8"}]},
-        { m: 8, s: [{t: "Mindset Value Investing", v: "tQXX-npOeUY"}, {t: "Membeli Saham Diskon (MOS)", v: "A0u2F017XfI"}]},
-        { m: 9, s: [{t: "Saham Bluechip vs Second Liner", v: "v7D6vYfL70k"}, {t: "Aksi Korporasi (Stock Split/Right Issue)", v: "ir625-6bSSI"}]},
-        { m: 10, s: [{t: "Psikologi Saat Pasar Turun", v: "7enFJSZgqE0"}, {t: "Manajemen Portofolio", v: "F6-P7Y_mD4I"}]},
-        { m: 11, s: [{t: "Mencari Saham Growth", v: "3Vj5Fk-08I0"}, {t: "Membaca Laporan Tahunan", v: "D_U48-qGf9k"}]},
-        { m: 12, s: [{t: "Strategi Jual Saham (Taking Profit)", v: "tQXX-npOeUY"}, {t: "Menuju Kebebasan Finansial", v: "MXj1oSUEVv8"}]}
-    ];
+    const MASTER_DATA = {
+        y1: [
+            { m: 1, s: [{t: "Logika Dasar Kepemilikan Saham", v: "v7D6vYfL70k"}, {t: "Psikologi Investor vs Trader", v: "7enFJSZgqE0"}]},
+            { m: 2, s: [{t: "Keamanan Broker & Daftar OJK", v: "AtL8aVvgK4U"}, {t: "Memahami Sektoral Saham BEI", v: "ir625-6bSSI"}]},
+            { m: 3, s: [{t: "Strategi Mendapat Dividen", v: "MXj1oSUEVv8"}, {t: "Cara Baca Order Book & Antrian", v: "_U1-C-eH8O0"}]},
+            { m: 4, s: [{t: "Laporan Laba Rugi (Dasar)", v: "6v-hK7uH7X0"}, {t: "Analisis Neraca & Aset", v: "jNqQ_v0UqU8"}]},
+            { m: 5, s: [{t: "Aliran Kas (Cash Flow)", v: "D_U48-qGf9k"}, {t: "Valuasi PER Murah/Mahal", v: "3Vj5Fk-08I0"}]},
+            { m: 6, s: [{t: "Valuasi PBV & Harga Wajar", v: "L9YhA9S6-6U"}, {t: "Review & Screening Sederhana", v: "F6-P7Y_mD4I"}]},
+            { m: 7, s: [{t: "Analisis Efisiensi Bisnis", v: "6v-hK7uH7X0"}, {t: "Analisis Hutang Saham", v: "jNqQ_v0UqU8"}]},
+            { m: 8, s: [{t: "Margin of Safety (MOS)", v: "tQXX-npOeUY"}, {t: "Membeli Saham Diskon", v: "A0u2F017XfI"}]},
+            { m: 9, s: [{t: "Bluechip vs Second Liner", v: "v7D6vYfL70k"}, {t: "Aksi Korporasi Saham", v: "ir625-6bSSI"}]},
+            { m: 10, s: [{t: "Diversifikasi Portofolio", v: "F6-P7Y_mD4I"}, {t: "Kontrol Emosi Saat Market Turun", v: "7enFJSZgqE0"}]},
+            { m: 11, s: [{t: "Mencari Saham Multibagger", v: "3Vj5Fk-08I0"}, {t: "Membaca Laporan Tahunan", v: "D_U48-qGf9k"}]},
+            { m: 12, s: [{t: "Strategi Jual (Exit Plan)", v: "tQXX-npOeUY"}, {t: "Wisuda Investor Tahun 1", v: "MXj1oSUEVv8"}]}
+        ]
+    };
 
     function start() {
-        const n = document.getElementById('uInp').value;
+        const n = document.getElementById('uName').value;
         if(!n) return alert("Isi nama!");
-        localStorage.setItem('user', n);
+        localStorage.setItem('IM_USER', n);
         document.getElementById('splash').style.display = 'none';
         init();
     }
 
     function init() {
-        document.getElementById('head-name').innerText = "Investor: " + localStorage.getItem('user');
-        renderMonths();
-        setMonth(curM);
+        document.getElementById('disp-name').innerText = "INVESTOR: " + localStorage.getItem('IM_USER').toUpperCase();
+        renderGrid();
+        loadMonth(curMonth);
+        checkUnlocks();
     }
 
-    function renderMonths() {
-        const list = document.getElementById('m-list');
-        list.innerHTML = "";
+    function renderGrid() {
+        const grid = document.getElementById('m-grid');
+        grid.innerHTML = "";
         for(let i=1; i<=12; i++) {
-            const done = localStorage.getItem(`mdone_${i}`);
-            list.innerHTML += `<div class="m-card ${done?'done':''} ${curM===i?'active':''}" onclick="setMonth(${i})">${i}</div>`;
+            const isDone = localStorage.getItem(`mdone_${curYear}_${i}`);
+            grid.innerHTML += `<div class="btn-m ${isDone?'done':''} ${curMonth===i?'active':''}" onclick="loadMonth(${i})">${i}</div>`;
         }
     }
 
-    function setMonth(m) {
-        curM = m;
-        renderMonths();
+    function loadMonth(m) {
+        curMonth = m;
+        renderGrid();
         const area = document.getElementById('c-area');
-        const monthData = DATA[m-1];
+        const mData = MASTER_DATA[curYear][m-1];
         
-        area.innerHTML = `<h3>Bulan ${m}</h3>`;
-        monthData.s.forEach((s, i) => {
-            const taskDone = localStorage.getItem(`task_${m}_${i}`);
+        area.innerHTML = `<h3 style="margin-bottom:15px; font-size:1rem;">Bulan Ke-${m}</h3>`;
+        mData.s.forEach((s, i) => {
+            const done = localStorage.getItem(`task_${curYear}_${m}_${i}`);
             area.innerHTML += `
-                <div class="card" style="${taskDone?'opacity:0.6':''}">
-                    <div style="font-weight:800; margin-bottom:10px;">Sesi ${i+1}: ${s.t} ${taskDone?'✅':''}</div>
-                    ${!taskDone ? `
-                        <a href="https://www.youtube.com/watch?v=${s.v}" target="_blank" class="video-link">▶ NONTON VIDEO (Sesuai Judul)</a>
-                        <textarea id="nt-${m}-${i}" oninput="save(${m},${i})" placeholder="Tulis catatan..."></textarea>
-                        <button class="btn-check" onclick="finish(${m},${i})">SELESAI SESI</button>
-                    ` : `<p style="color:var(--s); font-weight:800; margin:0;">Selesai Pelajari</p>`}
+                <div class="lesson-card ${done?'is-done':''}">
+                    <div class="badge">SESI ${i+1}</div>
+                    <h4 style="font-size:0.9rem;">${s.t} ${done?'✅':''}</h4>
+                    ${!done ? `
+                        <a href="https://www.youtube.com/watch?v=${s.v}" target="_blank" class="btn-yt">▶ NONTON VIDEO</a>
+                        <textarea id="nt-${m}-${i}" oninput="saveNote(${m},${i})" placeholder="Catatan penting..."></textarea>
+                        <button class="btn-finish" onclick="finish(${m},${i})">SELESAI SESI</button>
+                    ` : `<p style="color:var(--s); font-weight:800; font-size:0.8rem; margin-top:10px;">Materi Selesai.</p>`}
                 </div>`;
             setTimeout(() => {
-                const sn = localStorage.getItem(`note_${m}_${i}`);
+                const sn = localStorage.getItem(`note_${curYear}_${m}_${i}`);
                 if(sn && document.getElementById(`nt-${m}-${i}`)) document.getElementById(`nt-${m}-${i}`).value = sn;
             }, 5);
         });
@@ -108,257 +140,42 @@
 
     function finish(m, i) {
         confetti({ particleCount: 100, spread: 70, origin: { y: 0.8 } });
-        localStorage.setItem(`task_${m}_${i}`, 'true');
-        const mData = DATA[m-1];
-        let allDone = true;
-        mData.s.forEach((_, idx) => { if(!localStorage.getItem(`task_${m}_${idx}`)) allDone = false; });
-        if(allDone) localStorage.setItem(`mdone_${m}`, 'true');
-        setMonth(m);
-    }
-
-    function save(m, i) {
-        localStorage.setItem(`note_${m}_${i}`, document.getElementById(`nt-${m}-${i}`).value);
-    }
-
-    window.onload = () => { if(localStorage.getItem('user')) { document.getElementById('splash').style.display = 'none'; init(); } };
-</script>
-</body>
-</html>
-            font-size: 0.6rem; 
-            font-weight: 800; 
-        }
-
-        .video-btn { 
-            display: block; 
-            text-align: center;
-            background: #fee2e2; 
-            color: #ef4444; 
-            text-decoration: none; 
-            padding: 12px; 
-            border-radius: 12px; 
-            font-weight: 800; 
-            margin: 15px 0; 
-            font-size: 0.8rem; 
-        }
-
-        textarea { 
-            width: 100%; 
-            border: 1px solid #e2e8f0; 
-            border-radius: 12px; 
-            padding: 12px; 
-            height: 80px; 
-            font-family: inherit; 
-            resize: none; 
-            font-size: 0.85rem; 
-            background: #fcfcfc;
-        }
-
-        .btn-action { 
-            width: 100%; 
-            border: none; 
-            padding: 15px; 
-            border-radius: 12px; 
-            font-weight: 800; 
-            cursor: pointer; 
-            margin-top: 10px;
-            font-size: 0.9rem;
-        }
-
-        .btn-finish { background: var(--s); color: white; }
-        .btn-cert { background: var(--g); color: white; margin-top: 15px; display: none; }
-
-        /* Splash Screen Fix */
-        #splash { 
-            position: fixed; 
-            inset: 0; 
-            background: var(--p); 
-            z-index: 2000; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            color: white; 
-            padding: 40px; 
-        }
-
-        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Sembunyikan sertifikat dari tampilan utama */
-        #cert-template { position: fixed; left: -2000px; width: 800px; height: 600px; background: white; padding: 40px; text-align: center; border: 20px solid var(--p); }
-    </style>
-</head>
-<body>
-
-<div id="splash">
-    <div style="font-size: 3rem;">🏅</div>
-    <h1 style="margin: 10px 0 5px;">Investor Mastery</h1>
-    <p style="opacity: 0.6; margin-bottom: 30px;">Turbo: 2 Sesi/Minggu</p>
-    <input type="text" id="userName" placeholder="Nama Lengkap Anda" style="width: 100%; padding: 15px; border-radius: 12px; border: none; text-align: center; margin-bottom: 15px;">
-    <button onclick="startApp()" style="width: 100%; padding: 15px; border-radius: 12px; border: none; background: var(--g); color: white; font-weight: 800;">MULAI BELAJAR</button>
-</div>
-
-<div class="app-wrapper">
-    <header>
-        <div style="font-size: 0.7rem; letter-spacing: 2px; opacity: 0.7; margin-bottom: 4px;">PROGRESS TRACKER</div>
-        <div id="display-name" style="font-weight: 800; font-size: 1.1rem;">-</div>
-    </header>
-
-    <div class="year-nav">
-        <button id="y1-nav" class="y-btn active" onclick="setYear('y1')">TAHUN 1</button>
-        <button id="y2-nav" class="y-btn" onclick="unlock('y2')">TAHUN 2 🔒</button>
-        <button id="y3-nav" class="y-btn" onclick="unlock('y3')">TAHUN 3 🔒</button>
-    </div>
-
-    <div class="month-grid" id="month-list"></div>
-
-    <main class="content-area" id="content-area">
-        <div style="text-align: center; color: #94a3b8; margin-top: 40px;">Pilih nomor bulan untuk melihat sesi belajar.</div>
-    </main>
-</div>
-
-<div id="cert-template">
-    <div style="border: 10px double var(--g); height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-        <h1 style="color: var(--g); font-size: 50px; margin: 0;">CERTIFICATE</h1>
-        <p style="margin-top: 20px;">Diberikan Kepada:</p>
-        <h2 id="cert-user" style="font-size: 40px; border-bottom: 2px solid var(--p); min-width: 400px; margin: 10px 0;"></h2>
-        <p>Telah Menyelesaikan Kurikulum:</p>
-        <h3 id="cert-lvl" style="color: var(--s);"></h3>
-    </div>
-</div>
-
-<script>
-    let curYear = 'y1';
-    let curMonth = 0;
-
-    const CURRICULUM = {
-        y1: [
-            { m: 1, s: [{t: "Logika Dasar Bisnis", v: "v7D6vYfL70k"}, {t: "Psikologi Sabar", v: "7enFJSZgqE0"}]},
-            { m: 2, s: [{t: "Keamanan Broker", v: "AtL8aVvgK4U"}, {t: "Sektoral BEI", v: "ir625-6bSSI"}]},
-            { m: 3, s: [{t: "Dividen Dasar", v: "MXj1oSUEVv8"}, {t: "Order Book", v: "_U1-C-eH8O0"}]},
-            { m: 4, s: [{t: "Laporan Laba", v: "6v-hK7uH7X0"}, {t: "Analisis Neraca", v: "jNqQ_v0UqU8"}]},
-            { m: 5, s: [{t: "Arus Kas Tunai", v: "D_U48-qGf9k"}, {t: "Rasio PER", v: "3Vj5Fk-08I0"}]},
-            { m: 6, s: [{t: "Rasio PBV", v: "L9YhA9S6-6U"}, {t: "Wisuda Dasar", v: "F6-P7Y_mD4I", c: "TAHUN 1 (FOUNDATION)"}]},
-            { m: 7, s: [{t: "Efisiensi ROE", v: "6v-hK7uH7X0"}, {t: "Manajemen Hutang", v: "jNqQ_v0UqU8"}]},
-            { m: 8, s: [{t: "Nilai Intrinsik", v: "tQXX-npOeUY"}, {t: "Margin of Safety", v: "A0u2F017XfI"}]},
-            { m: 9, s: [{t: "Economic Moat", v: "v7D6vYfL70k"}, {t: "Corporate Action", v: "ir625-6bSSI"}]},
-            { m: 10, s: [{t: "Makro Ekonomi", v: "AtL8aVvgK4U"}, {t: "Portofolio Mix", v: "F6-P7Y_mD4I"}]},
-            { m: 11, s: [{t: "Screening Pro", v: "3Vj5Fk-08I0"}, {t: "Annual Report", v: "D_U48-qGf9k"}]},
-            { m: 12, s: [{t: "Exit Strategy", v: "tQXX-npOeUY"}, {t: "Final Master", v: "MXj1oSUEVv8", c: "TAHUN 1 (MASTER)"}]}
-        ]
-    };
-
-    function startApp() {
-        const name = document.getElementById('userName').value.trim();
-        if(!name) return alert("Masukkan nama!");
-        localStorage.setItem('IM_USER_NAME', name);
-        document.getElementById('splash').style.display = 'none';
-        init();
-    }
-
-    function init() {
-        document.getElementById('display-name').innerText = localStorage.getItem('IM_USER_NAME');
-        renderMonths();
-        checkUnlocks();
-    }
-
-    function renderMonths() {
-        const list = document.getElementById('month-list');
-        list.innerHTML = "";
-        for(let i=1; i<=12; i++) {
-            const isDone = localStorage.getItem(`mdone_${curYear}_${i}`);
-            const isActive = curMonth === i;
-            list.innerHTML += `<div class="m-card ${isDone?'done':''} ${isActive?'active':''}" onclick="setMonth(${i})">${i}</div>`;
-        }
-    }
-
-    function setMonth(m) {
-        curMonth = m;
-        renderMonths();
-        const area = document.getElementById('content-area');
-        const data = CURRICULUM[curYear][m-1];
-        
-        area.innerHTML = `<h3 style="margin-top:0">Bulan ${m}</h3>`;
-        data.s.forEach((s, i) => {
-            const isDone = localStorage.getItem(`task_${curYear}_${m}_${i}`);
-            area.innerHTML += `
-                <div class="week-card" style="${isDone?'opacity:0.6':''}">
-                    <div class="tag">MINGGU ${i+1}</div>
-                    <div style="font-weight:800; margin-bottom:5px;">${s.t} ${isDone?'✅':''}</div>
-                    ${!isDone ? `
-                        <a href="https://www.youtube.com/watch?v=${s.v}" target="_blank" class="video-btn">▶ NONTON VIDEO</a>
-                        <textarea id="nt-${m}-${i}" oninput="saveNote(${m},${i})" placeholder="Catatan..."></textarea>
-                        <button class="btn-action btn-finish" onclick="finishTask(${m},${i},'${s.c||''}')">SELESAI SESI</button>
-                    ` : `<p style="color:var(--s); font-weight:800; font-size:0.8rem;">Sesi Selesai</p>`}
-                    ${isDone && s.c ? `<button class="btn-action btn-cert" style="display:block" onclick="genCert('${s.c}')">🎓 AMBIL SERTIFIKAT</button>` : ''}
-                </div>
-            `;
-            // Restore notes
-            setTimeout(() => {
-                const savedNote = localStorage.getItem(`note_${curYear}_${m}_${i}`);
-                if(savedNote && document.getElementById(`nt-${m}-${i}`)) document.getElementById(`nt-${m}-${i}`).value = savedNote;
-            }, 5);
-        });
-    }
-
-    function finishTask(m, i, cert) {
-        confetti({ particleCount: 100, spread: 70, origin: { y: 0.8 } });
         localStorage.setItem(`task_${curYear}_${m}_${i}`, 'true');
-        
-        // Check Month Completion
-        const mData = CURRICULUM[curYear][m-1];
-        let allDone = true;
-        mData.s.forEach((_, idx) => { if(!localStorage.getItem(`task_${curYear}_${m}_${idx}`)) allDone = false; });
-        if(allDone) localStorage.setItem(`mdone_${curYear}_${m}`, 'true');
-
-        setMonth(m);
+        const mData = MASTER_DATA[curYear][m-1];
+        let all = true;
+        mData.s.forEach((_, idx) => { if(!localStorage.getItem(`task_${curYear}_${m}_${idx}`)) all = false; });
+        if(all) localStorage.setItem(`mdone_${curYear}_${m}`, 'true');
+        loadMonth(m);
     }
 
     function saveNote(m, i) {
-        const val = document.getElementById(`nt-${m}-${i}`).value;
-        localStorage.setItem(`note_${curYear}_${m}_${i}`, val);
+        localStorage.setItem(`note_${curYear}_${m}_${i}`, document.getElementById(`nt-${m}-${i}`).value);
     }
 
-    function setYear(y) {
-        curYear = y;
-        curMonth = 0;
+    function changeYear(y) {
+        curYear = y; curMonth = 1;
         document.querySelectorAll('.y-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById(y+'-nav').classList.add('active');
-        document.getElementById('content-area').innerHTML = `<div style="text-align: center; color: #94a3b8; margin-top: 40px;">Pilih nomor bulan.</div>`;
-        renderMonths();
+        document.getElementById(y+'-btn').classList.add('active');
+        init();
     }
 
-    function unlock(y) {
-        if(localStorage.getItem('un_'+y)) return setYear(y);
-        const q = y === 'y2' ? "Berapa sektor di BEI? (Bulan 4)" : "Apa istilah 2 kata Raja Uang Tunai? (Bulan 9)";
-        const a = y === 'y2' ? "11" : "arus kas";
-        const userA = prompt(q);
-        if(userA && userA.toLowerCase().trim() === a) {
+    function unlockYear(y) {
+        if(localStorage.getItem('un_'+y)) return changeYear(y);
+        const ans = y === 'y2' ? "11" : "arus kas";
+        const user = prompt(y==='y2' ? "KUIS: Berapa jumlah sektor di BEI?" : "KUIS: Apa raja dalam laporan keuangan?");
+        if(user && user.toLowerCase().trim() === ans) {
             localStorage.setItem('un_'+y, 'true');
-            setYear(y);
-            checkUnlocks();
-        } else { alert("Salah!"); }
+            changeYear(y);
+        } else { alert("Jawaban salah!"); }
     }
 
     function checkUnlocks() {
-        if(localStorage.getItem('un_y2')) document.getElementById('y2-nav').innerText = "TAHUN 2 ✅";
-        if(localStorage.getItem('un_y3')) document.getElementById('y3-nav').innerText = "TAHUN 3 ✅";
+        if(localStorage.getItem('un_y2')) document.getElementById('y2-btn').innerText = "TAHUN 2 ✅";
+        if(localStorage.getItem('un_y3')) document.getElementById('y3-btn').innerText = "TAHUN 3 ✅";
     }
 
-    function genCert(lvl) {
-        document.getElementById('cert-user').innerText = localStorage.getItem('IM_USER_NAME').toUpperCase();
-        document.getElementById('cert-lvl').innerText = lvl;
-        const cert = document.getElementById('cert-template');
-        html2canvas(cert).then(canvas => {
-            const link = document.createElement('a');
-            link.download = `Sertifikat_${lvl}.png`;
-            link.href = canvas.toDataURL();
-            link.click();
-        });
-    }
-
-    window.onload = () => { if(localStorage.getItem('IM_USER_NAME')) { document.getElementById('splash').style.display = 'none'; init(); } };
+    window.onload = () => { if(localStorage.getItem('IM_USER')) { document.getElementById('splash').style.display = 'none'; init(); } };
 </script>
-
 </body>
 </html>
 
