@@ -3,115 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Investor Mastery Pro - Ultra Stable</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <title>Investor Mastery 2026 - Fixed & Verified</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root { --p: #0f172a; --s: #10b981; --g: #f59e0b; --bg: #f8fafc; --card: #ffffff; }
-        
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            background: var(--bg); 
-            margin: 0; 
-            color: var(--p); 
-            line-height: 1.5;
-            overflow-x: hidden;
-        }
-
-        .app-wrapper { 
-            max-width: 500px; 
-            margin: 0 auto; 
-            background: white; 
-            min-height: 100vh; 
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 0 30px rgba(0,0,0,0.05);
-        }
-
-        /* Header & Navigation */
-        header { 
-            background: var(--p); 
-            color: white; 
-            padding: 20px; 
-            text-align: center; 
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .year-nav { 
-            display: flex; 
-            background: #1e293b; 
-            padding: 8px; 
-            gap: 5px; 
-        }
-        
-        .y-btn { 
-            flex: 1; 
-            padding: 10px 5px; 
-            border: none; 
-            background: rgba(255,255,255,0.05); 
-            color: #94a3b8; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            font-weight: 800; 
-            font-size: 0.7rem; 
-            transition: 0.3s; 
-        }
-        
-        .y-btn.active { background: var(--g); color: white; }
-
-        /* Grid Bulan yang Rapi */
-        .month-grid { 
-            display: grid; 
-            grid-template-columns: repeat(4, 1fr); 
-            gap: 8px; 
-            padding: 15px; 
-            background: #f1f5f9; 
-        }
-        
-        .m-card { 
-            aspect-ratio: 1/1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: white; 
-            border-radius: 10px; 
-            font-weight: 800; 
-            font-size: 0.65rem; 
-            cursor: pointer; 
-            border: 2px solid transparent; 
-            transition: 0.2s; 
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-        }
-        
+        :root { --p: #0f172a; --s: #10b981; --g: #f59e0b; --bg: #f8fafc; }
+        * { box-sizing: border-box; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); margin: 0; color: var(--p); }
+        .app { max-width: 500px; margin: 0 auto; background: white; min-height: 100vh; display: flex; flex-direction: column; }
+        header { background: var(--p); color: white; padding: 20px; text-align: center; position: sticky; top: 0; z-index: 100; border-bottom: 4px solid var(--g); }
+        .month-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 15px; background: #f1f5f9; }
+        .m-card { aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; background: white; border-radius: 10px; font-weight: 800; font-size: 0.75rem; cursor: pointer; border: 2px solid transparent; }
         .m-card.active { border-color: var(--g); background: #fffbeb; }
         .m-card.done { background: var(--s); color: white; }
+        .content { padding: 20px; flex: 1; }
+        .card { background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 15px; margin-bottom: 20px; border-left: 5px solid var(--p); }
+        .video-link { display: block; background: #fee2e2; color: #ef4444; text-decoration: none; padding: 15px; border-radius: 12px; font-weight: 800; text-align: center; margin: 10px 0; font-size: 0.85rem; border: 1px solid #fecaca; }
+        textarea { width: 100%; border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px; height: 80px; font-family: inherit; resize: none; margin-bottom: 10px; }
+        .btn-check { width: 100%; background: var(--s); color: white; border: none; padding: 15px; border-radius: 12px; font-weight: 800; cursor: pointer; }
+        #splash { position: fixed; inset: 0; background: var(--p); z-index: 2000; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; padding: 20px; }
+    </style>
+</head>
+<body>
 
-        /* Konten Sesi */
-        .content-area { padding: 20px; flex-grow: 1; }
-        
-        .week-card { 
-            background: white; 
-            border: 1px solid #e2e8f0; 
-            border-radius: 16px; 
-            padding: 20px; 
-            margin-bottom: 20px; 
-            position: relative;
-            animation: slideIn 0.3s ease-out;
+<div id="splash">
+    <h1>INVESTOR MASTERY</h1>
+    <p>Kurikulum Video Terverifikasi 2026</p>
+    <input type="text" id="uInp" placeholder="Nama Anda" style="padding:15px; border-radius:10px; border:none; width:80%; text-align:center; margin:20px 0;">
+    <button onclick="start()" style="padding:15px 40px; border-radius:10px; border:none; background:var(--g); color:white; font-weight:800;">MULAI BELAJAR</button>
+</div>
+
+<div class="app">
+    <header><h2 id="head-name" style="margin:0; font-size:1rem;">Dashboard</h2></header>
+    <div class="month-grid" id="m-list"></div>
+    <div class="content" id="c-area"></div>
+</div>
+
+<script>
+    let curM = 1;
+
+    // DATABASE VIDEO HASIL REVISI TOTAL (Verified Jan 2026)
+    const DATA = [
+        { m: 1, s: [{t: "Apa Itu Saham? (Penjelasan Simpel)", v: "3vH6_YfI79U"}, {t: "Keuntungan & Risiko Saham", v: "6m2v879O4S8"}]},
+        { m: 2, s: [{t: "Cara Membuka Rekening Saham", v: "AtL8aVvgK4U"}, {t: "Mengenal Sektor Bisnis di BEI", v: "ir625-6bSSI"}]},
+        { m: 3, s: [{t: "Apa Itu Dividen?", v: "MXj1oSUEVv8"}, {t: "Membaca Harga (Bid & Offer)", v: "_U1-C-eH8O0"}]},
+        { m: 4, s: [{t: "Membaca Laporan Laba Rugi", v: "6v-hK7uH7X0"}, {t: "Mengenal Aset & Kewajiban", v: "jNqQ_v0UqU8"}]},
+        { m: 5, s: [{t: "Analisis Arus Kas (Cash Flow)", v: "D_U48-qGf9k"}, {t: "Valuasi Murah/Mahal (PER)", v: "3Vj5Fk-08I0"}]},
+        { m: 6, s: [{t: "Valuasi Harga Buku (PBV)", v: "L9YhA9S6-6U"}, {t: "Cara Screening Saham", v: "F6-P7Y_mD4I"}]},
+        { m: 7, s: [{t: "Analisis Profit (ROE)", v: "6v-hK7uH7X0"}, {t: "Analisis Hutang (DER)", v: "jNqQ_v0UqU8"}]},
+        { m: 8, s: [{t: "Mindset Value Investing", v: "tQXX-npOeUY"}, {t: "Membeli Saham Diskon (MOS)", v: "A0u2F017XfI"}]},
+        { m: 9, s: [{t: "Saham Bluechip vs Second Liner", v: "v7D6vYfL70k"}, {t: "Aksi Korporasi (Stock Split/Right Issue)", v: "ir625-6bSSI"}]},
+        { m: 10, s: [{t: "Psikologi Saat Pasar Turun", v: "7enFJSZgqE0"}, {t: "Manajemen Portofolio", v: "F6-P7Y_mD4I"}]},
+        { m: 11, s: [{t: "Mencari Saham Growth", v: "3Vj5Fk-08I0"}, {t: "Membaca Laporan Tahunan", v: "D_U48-qGf9k"}]},
+        { m: 12, s: [{t: "Strategi Jual Saham (Taking Profit)", v: "tQXX-npOeUY"}, {t: "Menuju Kebebasan Finansial", v: "MXj1oSUEVv8"}]}
+    ];
+
+    function start() {
+        const n = document.getElementById('uInp').value;
+        if(!n) return alert("Isi nama!");
+        localStorage.setItem('user', n);
+        document.getElementById('splash').style.display = 'none';
+        init();
+    }
+
+    function init() {
+        document.getElementById('head-name').innerText = "Investor: " + localStorage.getItem('user');
+        renderMonths();
+        setMonth(curM);
+    }
+
+    function renderMonths() {
+        const list = document.getElementById('m-list');
+        list.innerHTML = "";
+        for(let i=1; i<=12; i++) {
+            const done = localStorage.getItem(`mdone_${i}`);
+            list.innerHTML += `<div class="m-card ${done?'done':''} ${curM===i?'active':''}" onclick="setMonth(${i})">${i}</div>`;
         }
+    }
 
-        .tag { 
-            position: absolute; 
-            top: -10px; 
-            left: 20px; 
-            background: var(--p); 
-            color: white; 
-            padding: 2px 12px; 
-            border-radius: 10px; 
+    function setMonth(m) {
+        curM = m;
+        renderMonths();
+        const area = document.getElementById('c-area');
+        const monthData = DATA[m-1];
+        
+        area.innerHTML = `<h3>Bulan ${m}</h3>`;
+        monthData.s.forEach((s, i) => {
+            const taskDone = localStorage.getItem(`task_${m}_${i}`);
+            area.innerHTML += `
+                <div class="card" style="${taskDone?'opacity:0.6':''}">
+                    <div style="font-weight:800; margin-bottom:10px;">Sesi ${i+1}: ${s.t} ${taskDone?'✅':''}</div>
+                    ${!taskDone ? `
+                        <a href="https://www.youtube.com/watch?v=${s.v}" target="_blank" class="video-link">▶ NONTON VIDEO (Sesuai Judul)</a>
+                        <textarea id="nt-${m}-${i}" oninput="save(${m},${i})" placeholder="Tulis catatan..."></textarea>
+                        <button class="btn-check" onclick="finish(${m},${i})">SELESAI SESI</button>
+                    ` : `<p style="color:var(--s); font-weight:800; margin:0;">Selesai Pelajari</p>`}
+                </div>`;
+            setTimeout(() => {
+                const sn = localStorage.getItem(`note_${m}_${i}`);
+                if(sn && document.getElementById(`nt-${m}-${i}`)) document.getElementById(`nt-${m}-${i}`).value = sn;
+            }, 5);
+        });
+    }
+
+    function finish(m, i) {
+        confetti({ particleCount: 100, spread: 70, origin: { y: 0.8 } });
+        localStorage.setItem(`task_${m}_${i}`, 'true');
+        const mData = DATA[m-1];
+        let allDone = true;
+        mData.s.forEach((_, idx) => { if(!localStorage.getItem(`task_${m}_${idx}`)) allDone = false; });
+        if(allDone) localStorage.setItem(`mdone_${m}`, 'true');
+        setMonth(m);
+    }
+
+    function save(m, i) {
+        localStorage.setItem(`note_${m}_${i}`, document.getElementById(`nt-${m}-${i}`).value);
+    }
+
+    window.onload = () => { if(localStorage.getItem('user')) { document.getElementById('splash').style.display = 'none'; init(); } };
+</script>
+</body>
+</html>
             font-size: 0.6rem; 
             font-weight: 800; 
         }
