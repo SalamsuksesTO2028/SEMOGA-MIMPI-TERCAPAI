@@ -2,116 +2,234 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Investor Mastery Pro - Final Edition</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Investor Mastery Pro: Monthly-Weekly Turbo</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root { 
-            --primary: #0f172a; --secondary: #10b981; --gold: #f59e0b; --bg: #f8fafc; 
-        }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; padding: 0; color: #1e293b; line-height: 1.6; }
-        #splash { position: fixed; inset: 0; background: var(--primary); display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; z-index: 10000; text-align: center; }
-        .container { max-width: 850px; margin: 20px auto; background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); overflow: hidden; }
-        .tab-nav { display: flex; background: var(--primary); padding: 12px; gap: 8px; }
-        .tab-btn { flex: 1; padding: 15px; color: #94a3b8; border: none; background: transparent; cursor: pointer; font-weight: bold; border-radius: 12px; transition: 0.3s; }
-        .tab-btn.active { background: white; color: var(--primary); }
-        .content-tab { padding: 30px; display: none; animation: fadeIn 0.5s; }
-        .card { background: white; border: 1px solid #e2e8f0; border-radius: 18px; padding: 25px; margin-bottom: 35px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
-        .quote { font-style: italic; color: #64748b; border-left: 5px solid var(--gold); padding-left: 15px; margin: 20px 0; font-size: 0.95rem; }
-        textarea { width: 100%; border: 1px solid #cbd5e1; border-radius: 12px; padding: 15px; min-height: 120px; box-sizing: border-box; font-family: inherit; font-size: 1rem; }
-        .btn-video { display: inline-flex; align-items: center; background: #ef4444; color: white; padding: 12px 25px; border-radius: 12px; text-decoration: none; font-weight: bold; margin: 15px 0; gap: 10px; }
-        .btn-cert { background: var(--gold); color: white; border: none; padding: 20px; width: 100%; border-radius: 15px; font-weight: 800; cursor: pointer; margin-top: 20px; display: none; font-size: 1.1rem; }
-        .footer-tools { padding: 20px; text-align: center; background: #f1f5f9; border-top: 1px solid #e2e8f0; }
-        .btn-backup { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; }
-        #cert-template { position: fixed; left: -5000px; width: 1000px; height: 750px; background: white; border: 45px solid var(--primary); text-align: center; padding: 60px; box-sizing: border-box; }
-        @keyframes fadeIn { from {opacity: 0; transform: translateY(10px);} to {opacity: 1; transform: translateY(0);} }
+        :root { --p: #0f172a; --s: #10b981; --g: #f59e0b; --bg: #f8fafc; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); margin: 0; color: var(--p); line-height: 1.6; }
+        
+        .app { max-width: 650px; margin: 0 auto; background: white; min-height: 100vh; position: relative; box-shadow: 0 0 40px rgba(0,0,0,0.05); }
+        header { background: var(--p); color: white; padding: 30px 20px; text-align: center; border-bottom: 5px solid var(--g); }
+        
+        .year-nav { display: flex; background: #1e293b; padding: 10px; gap: 8px; }
+        .y-btn { flex: 1; padding: 12px; border: none; background: rgba(255,255,255,0.1); color: #94a3b8; border-radius: 12px; cursor: pointer; font-weight: 800; font-size: 0.75rem; transition: 0.3s; }
+        .y-btn.active { background: white; color: var(--p); }
+
+        .month-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 15px; background: #f1f5f9; border-bottom: 1px solid #e2e8f0; }
+        .m-card { padding: 12px 5px; background: white; border-radius: 10px; text-align: center; font-weight: 800; font-size: 0.65rem; cursor: pointer; border: 2px solid transparent; transition: 0.2s; color: #64748b; }
+        .m-card.active { border-color: var(--g); color: var(--p); box-shadow: 0 4px 10px rgba(245,158,11,0.2); }
+        .m-card.done { background: #dcfce7; color: var(--s); border-color: var(--s); }
+
+        .weekly-content { padding: 20px; animation: fadeIn 0.4s ease; }
+        .week-box { background: white; border: 1px solid #e2e8f0; border-radius: 18px; padding: 20px; margin-bottom: 20px; border-left: 6px solid var(--p); position: relative; }
+        .week-tag { position: absolute; top: -10px; right: 20px; background: var(--g); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: 800; }
+        
+        .yt-link { display: flex; align-items: center; justify-content: center; background: #fee2e2; color: #ef4444; text-decoration: none; padding: 12px; border-radius: 12px; font-weight: 800; margin: 15px 0; gap: 8px; font-size: 0.85rem; }
+        textarea { width: 100%; border: 1.5px solid #e2e8f0; border-radius: 12px; padding: 12px; height: 90px; font-family: inherit; resize: none; margin-bottom: 10px; font-size: 0.9rem; }
+        textarea:focus { border-color: var(--g); outline: none; background: #fffdf9; }
+        
+        .complete-btn { width: 100%; background: var(--s); color: white; border: none; padding: 15px; border-radius: 12px; font-weight: 800; cursor: pointer; transition: 0.3s; }
+        .cert-btn { width: 100%; background: var(--p); color: white; border: none; padding: 15px; border-radius: 12px; font-weight: 800; cursor: pointer; margin-top: 10px; display: none; }
+
+        #splash { position: fixed; inset: 0; background: var(--p); z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; padding: 30px; text-align: center; }
+        #cert-print { position: fixed; left: -9999px; width: 1000px; height: 750px; background: white; border: 30px solid var(--p); padding: 50px; text-align: center; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
 <div id="splash">
-    <h1 style="font-size: 2.5rem; margin-bottom: 10px;">🏆 INVESTOR MASTERY 36</h1>
-    <p style="opacity: 0.8;">Kurikulum 3 Tahun: Dari Dasar Hingga Strategist</p>
-    <input type="text" id="userName" placeholder="Masukkan Nama Lengkap Anda..." style="padding:18px; border-radius:12px; width:320px; border:none; margin:25px 0; font-size:1.1rem; text-align:center;">
-    <button onclick="startApp()" style="padding:18px 50px; border-radius:12px; background:var(--gold); border:none; color:white; font-weight:bold; cursor:pointer; font-size:1.1rem; box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);">MULAI BELAJAR</button>
+    <div style="font-size: 4rem; margin-bottom: 10px;">📈</div>
+    <h1 style="margin:0;">INVESTOR MASTERY</h1>
+    <p style="opacity:0.7;">Turbo: 2 Sesi Per Minggu (36 Bulan)</p>
+    <input type="text" id="uName" placeholder="Nama Lengkap Anda" style="padding:15px; border-radius:12px; border:none; width:100%; max-width:300px; margin:25px 0; text-align:center; font-size:1rem; outline:none;">
+    <button onclick="startApp()" style="background:var(--g); color:white; border:none; padding:15px 40px; border-radius:12px; font-weight:800; cursor:pointer; width:100%; max-width:300px;">MULAI PERJALANAN</button>
 </div>
 
-<div class="container">
-    <div class="tab-nav">
-        <button id="btn-year1" class="tab-btn active" onclick="openTab(event, 'year1')">TAHUN 1 🌱</button>
-        <button id="btn-year2" class="tab-btn" onclick="verifyLevel(event, 'year2')">TAHUN 2 🔒</button>
-        <button id="btn-year3" class="tab-btn" onclick="verifyLevel(event, 'year3')">TAHUN 3 🔒</button>
-    </div>
-    
-    <div id="year1" class="content-tab" style="display:block;"></div>
-    <div id="year2" class="content-tab"></div>
-    <div id="year3" class="content-tab"></div>
+<div class="app">
+    <header>
+        <h2 style="margin:0; letter-spacing:2px; font-size:1.1rem;">LEARNING TRACKER</h2>
+        <p id="user-display" style="opacity:0.7; font-size:0.8rem; margin-top:5px;"></p>
+    </header>
 
-    <div class="footer-tools">
-        <button class="btn-backup" onclick="downloadAllNotes()">💾 BACKUP SEMUA CATATAN (.TXT)</button>
+    <div class="year-nav">
+        <button id="tab-y1" class="y-btn active" onclick="switchYear('y1')">TAHUN 1</button>
+        <button id="tab-y2" class="y-btn" onclick="unlock('y2')">TAHUN 2 🔒</button>
+        <button id="tab-y3" class="y-btn" onclick="unlock('y3')">TAHUN 3 🔒</button>
+    </div>
+
+    <div class="month-grid" id="month-list"></div>
+
+    <div class="weekly-content" id="week-area">
+        <center style="color:#94a3b8; margin-top:50px;">Pilih Bulan di atas untuk melihat tugas minggu ini.</center>
+    </div>
+
+    <div style="padding: 20px; text-align: center; background: #f8fafc; border-top: 1px solid #e2e8f0;">
+        <button onclick="exportData()" style="background:none; border:none; color:#64748b; font-weight:700; cursor:pointer; font-size:0.75rem;">💾 BACKUP DATA KE .TXT</button>
     </div>
 </div>
 
-<div id="cert-template">
-    <div style="border: 15px double var(--gold); height: 100%; padding: 50px; position: relative;">
-        <h1 style="color:var(--gold); font-size: 70px; margin: 0; letter-spacing: 5px;">CERTIFICATE</h1>
-        <p style="font-size: 28px; font-weight: bold; color: #444;">OF FINANCIAL EXCELLENCE</p>
-        <p style="margin-top: 70px; font-size: 22px;">Dengan bangga diberikan kepada:</p>
-        <h2 id="cert-name" style="font-size: 65px; color: var(--primary); text-decoration: underline; margin: 20px 0;">NAME</h2>
-        <p style="font-size: 22px;">Atas dedikasi menyelesaikan Kurikulum 36 Bulan:</p>
-        <h3 id="cert-level" style="font-size: 40px; color: var(--secondary); font-weight: 900;">LEVEL</h3>
-        <p style="margin-top:90px; font-style:italic; font-size: 22px; color: #666;">"Pengetahuan adalah aset dengan imbal hasil tertinggi."</p>
+<div id="cert-print">
+    <div style="border:15px double var(--g); height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px;">
+        <h1 style="color:var(--g); font-size:60px; margin:0;">CERTIFICATE</h1>
+        <p style="font-size:20px; letter-spacing:3px;">INVESTOR EXCELLENCE</p>
+        <p style="margin-top:40px;">Diberikan dengan hormat kepada:</p>
+        <h2 id="c-name" style="font-size:50px; border-bottom:2px solid var(--p); min-width:500px; margin:10px 0;"></h2>
+        <h3 id="c-lvl" style="color:var(--s); font-size:30px; margin-top:10px;"></h3>
+        <p style="margin-top:60px; font-style:italic; color:#666;">"Investasi terbaik adalah pada diri sendiri."</p>
     </div>
 </div>
 
 <script>
-    const curriculum = {
-        year1: [
-            { t: "Bulan 1: Logika Bisnis & Saham", q: "Membeli saham adalah membeli masa depan sebuah perusahaan, bukan sekadar bertaruh pada angka.", v: "2M30vXoIe3s" },
-            { t: "Bulan 2: Psikologi & Uang Dingin", q: "Ketenangan adalah aset terbesar investor saat badai pasar datang menerjang.", v: "7enFJSZgqE0" },
-            { t: "Bulan 3: Regulasi & Legalitas OJK", q: "Kuasai aturan mainnya agar Anda bisa bermain dengan aman dan nyaman.", v: "AtL8aVvgK4U" },
-            { t: "Bulan 4: Memahami 11 Sektor Utama", q: "Pahami karakter industrinya, karena setiap sektor memiliki ritme yang berbeda.", v: "ir625-6bSSI" },
-            { t: "Bulan 5: Dividen vs Pertumbuhan", q: "Dividen adalah bukti nyata bahwa perusahaan menghargai setiap lembar saham yang Anda miliki.", v: "MXj1oSUEVv8" },
-            { t: "Bulan 6: Mekanisme Order Book", q: "Melihat psikologi pasar melalui antrian beli dan jual di papan bursa.", v: "_U1-C-eH8O0" },
-            { t: "Bulan 7: Bedah Laporan Laba Rugi", q: "Keuntungan yang sehat adalah tanda manajemen yang kuat dan produk yang laku.", v: "6v-hK7uH7X0" },
-            { t: "Bulan 8: Kekuatan Neraca Keuangan", q: "Neraca yang bersih memberikan perlindungan saat ekonomi sedang melambat.", v: "jNqQ_v0UqU8" },
-            { t: "Bulan 9: Arus Kas: Aliran Uang Nyata", q: "Cash is King. Arus kas yang positif adalah jaminan kelangsungan bisnis.", v: "D_U48-qGf9k" },
-            { t: "Bulan 10: Valuasi PER Dasar", q: "Jangan membayar terlalu mahal untuk sebuah harapan yang belum pasti.", v: "3Vj5Fk-08I0" },
-            { t: "Bulan 11: Valuasi PBV & Nilai Buku", q: "Mencari perusahaan yang harganya masih di bawah nilai aset bersihnya.", v: "L9YhA9S6-6U" },
-            { t: "Bulan 12: Screening & Finalisasi Thn 1", q: "Selamat! Anda telah membangun fondasi yang kokoh untuk menjadi investor hebat.", v: "F6-P7Y_mD4I", cert: "TAHUN 1 (FOUNDATION)" }
-        ],
-        year2: [
-            { t: "Bulan 13: Menghitung Nilai Intrinsik", q: "Membeli saham di bawah nilai aslinya adalah kunci dari kekayaan jangka panjang.", v: "tQXX-npOeUY" },
-            { t: "Bulan 14: Margin of Safety (MOS)", q: "Berikan ruang untuk kesalahan. Jangan beli di harga yang terlalu pas-pasan.", v: "A0u2F017XfI" },
-            { t: "Bulan 15: Economic Moat (Keunggulan)", q: "Cari bisnis yang memiliki benteng pertahanan dari serangan kompetitor.", v: "v7D6vYfL70k" },
-            { t: "Bulan 16: Analisis Efisiensi (ROE)", q: "Efisiensi manajemen dalam memutar modal menentukan kualitas keuntungan Anda.", v: "6v-hK7uH7X0" },
-            { t: "Bulan 17: Manajemen & Rasio Hutang", q: "Hutang yang terkendali adalah pengungkit, hutang yang liar adalah bom waktu.", v: "jNqQ_v0UqU8" },
-            { t: "Bulan 18: Memahami Stock Split & RI", q: "Aksi korporasi seringkali merupakan sinyal mengenai kondisi internal perusahaan.", v: "ir625-6bSSI" },
-            { t: "Bulan 19: Analisis Laporan Tahunan", q: "Membaca apa yang tidak dikatakan adalah kemampuan tingkat lanjut seorang analis.", v: "D_U48-qGf9k" },
-            { t: "Bulan 20: Rotasi & Siklus Sektoral", q: "Sektor yang hari ini diabaikan bisa menjadi primadona di masa depan.", v: "7enFJSZgqE0" },
-            { t: "Bulan 21: Manajemen Portofolio", q: "Jangan menaruh semua telur di satu keranjang, tapi jangan terlalu banyak keranjang juga.", v: "F6-P7Y_mD4I" },
-            { t: "Bulan 22: Pengaruh Makro Global", q: "Dunia saling terhubung. Pahami ombak besar sebelum mengemudikan kapal Anda.", v: "AtL8aVvgK4U" },
-            { t: "Bulan 23: Bedah Sektor Perbankan", q: "Pahami bank, maka Anda akan memahami urat nadi perekonomian sebuah negara.", v: "L9YhA9S6-6U" },
-            { t: "Bulan 24: Finalisasi Tahun 2", q: "Anda kini seorang analis handal. Disiplin Anda mulai membuahkan hasil.", v: "MXj1oSUEVv8", cert: "TAHUN 2 (ANALYST)" }
-        ],
-        year3: [
-            { t: "Bulan 25: Keajaiban Compounding", q: "Biarkan waktu menjadi asisten terbaik dalam menumbuhkan kekayaan Anda.", v: "7enFJSZgqE0" },
-            { t: "Bulan 26: Menghindari Market Bubble", q: "Berani tampil beda saat pasar sedang euforia secara berlebihan.", v: "_U1-C-eH8O0" },
-            { t: "Bulan 27: Growth Investing Strategy", q: "Menemukan perusahaan kecil yang akan menjadi raksasa di masa depan.", v: "6v-hK7uH7X0" },
-            { t: "Bulan 28: Strategi Deep Value", q: "Membeli apa yang dibenci pasar saat ini, namun sangat berharga di masa depan.", v: "3Vj5Fk-08I0" },
-            { t: "Bulan 29: Perencanaan Dividen Masa Tua", q: "Membangun mesin uang yang akan menghidupi Anda selamanya.", v: "MXj1oSUEVv8" },
-            { t: "Bulan 30: Menavigasi Market Crash", q: "Penurunan pasar adalah kesempatan emas bagi investor yang memiliki kas.", v: "AtL8aVvgK4U" },
-            { t: "Bulan 31: Exit Strategy (Kapan Jual?)", q: "Tahu kapan harus mengambil keuntungan adalah bentuk tertinggi dari kecerdasan.", v: "tQXX-npOeUY" },
-            { t: "Bulan 32: Sektor Komoditas & Siklusnya", q: "Komoditas mengikuti siklus alam. Belajarlah untuk sabar menunggu giliran.", v: "ir625-6bSSI" },
-            { t: "Bulan 33: Sektor Properti & Suku Bunga", q: "Pahami hubungan antara bunga bank dengan nilai aset fisik yang nyata.", v: "jNqQ_v0UqU8" },
-            { t: "Bulan 34: Membaca Kebijakan Bank Sentral", q: "Kebijakan moneter adalah kompas utama arah pergerakan uang dunia.", v: "D_U48-qGf9k" },
-            { t: "Bulan 35: Rebalancing & Optimasi", q: "Terus asah dan rapikan portofolio Anda agar tetap sesuai dengan tujuan akhir.", v: "F6-P7Y_mD4I" },
-            { t: "Bulan 36: Kebebasan Finansial Sejati", q: "Keberhasilan Anda bukan tentang uang, tapi tentang memiliki kendali atas waktu Anda.", v: "7enFJSZgqE0", cert: "TAHUN 3 (STRATEGIST MASTER)" }
+    let curY = 'y1';
+    let curM = 0;
+
+    const MASTER_DATA = {
+        y1: [
+            { m: 1, s: [{ w: "Minggu 1", t: "Logika Dasar Saham", v: "v7D6vYfL70k", q: "Saham adalah bisnis nyata." }, { w: "Minggu 2", t: "Psikologi & Uang Dingin", v: "7enFJSZgqE0", q: "Kuasai emosi sebelum pasar." }] },
+            { m: 2, s: [{ w: "Minggu 1", t: "Keamanan Broker & OJK", v: "AtL8aVvgK4U", q: "Legalitas adalah harga mati." }, { w: "Minggu 2", t: "Sektoral BEI", v: "ir625-6bSSI", q: "Kenali jenis bisnis di bursa." }] },
+            { m: 3, s: [{ w: "Minggu 1", t: "Dividen Investing", v: "MXj1oSUEVv8", q: "Mendapatkan bagi hasil laba." }, { w: "Minggu 2", t: "Mekanisme Pasar & Order", v: "_U1-C-eH8O0", q: "Cara kerja antrian beli/jual." }] },
+            { m: 4, s: [{ w: "Minggu 1", t: "Laba Rugi (Income)", v: "6v-hK7uH7X0", q: "Cari mesin pencetak uang." }, { w: "Minggu 2", t: "Neraca (Balance)", v: "jNqQ_v0UqU8", q: "Kekuatan aset perusahaan." }] },
+            { m: 5, s: [{ w: "Minggu 1", t: "Arus Kas (Cashflow)", v: "D_U48-qGf9k", q: "Uang tunai adalah kebenaran." }, { w: "Minggu 2", t: "Rasio PER", v: "3Vj5Fk-08I0", q: "Harga vs Keuntungan." }] },
+            { m: 6, s: [{ w: "Minggu 1", t: "Rasio PBV", v: "L9YhA9S6-6U", q: "Harga vs Nilai buku." }, { w: "Minggu 2", t: "Sertifikasi Thn 1", v: "F6-P7Y_mD4I", q: "Review fondasi dasar.", cert: "TAHUN 1 (FOUNDATION)" }] },
+            { m: 7, s: [{ w: "Minggu 1", t: "Analisis Efisiensi", v: "6v-hK7uH7X0", q: "Seberapa hebat manajemen." }, { w: "Minggu 2", t: "Analisis Hutang", v: "jNqQ_v0UqU8", q: "Bahaya hutang berlebih." }] },
+            { m: 8, s: [{ w: "Minggu 1", t: "Growth vs Value", v: "tQXX-npOeUY", q: "Strategi memilih saham." }, { w: "Minggu 2", t: "Ekosistem Bisnis", v: "ir625-6bSSI", q: "Hubungan antar perusahaan." }] },
+            { m: 9, s: [{ w: "Minggu 1", t: "Makro Ekonomi", v: "AtL8aVvgK4U", q: "Dampak bunga & inflasi." }, { w: "Minggu 2", t: "Annual Report", v: "D_U48-qGf9k", q: "Membaca surat direksi." }] },
+            { m: 10, s: [{ w: "Minggu 1", t: "Corporate Action", v: "ir625-6bSSI", q: "Bonus & Right Issue." }, { w: "Minggu 2", t: "Portfolio Mix", v: "F6-P7Y_mD4I", q: "Diversifikasi yang benar." }] },
+            { m: 11, s: [{ w: "Minggu 1", t: "Screening Pro", v: "3Vj5Fk-08I0", q: "Mencari permata bursa." }, { w: "Minggu 2", t: "Manajemen Kas", v: "7enFJSZgqE0", q: "Kapan simpan cash?" }] },
+            { m: 12, s: [{ w: "Minggu 1", t: "Exit Strategy", v: "tQXX-npOeUY", q: "Tahu kapan harus jual." }, { w: "Minggu 2", t: "Final Review", v: "MXj1oSUEVv8", q: "Persiapan level Master.", cert: "TAHUN 1 (ADVANCED)" }] }
         ]
+        // Data y2 dan y3 akan mengikuti pola yang sama saat data di-load
     };
 
     function startApp() {
+        const n = document.getElementById('uName').value.trim();
+        if(!n) return alert("Isi nama Anda!");
+        localStorage.setItem('IM_USER', n);
+        document.getElementById('splash').style.display = 'none';
+        renderMonths();
+    }
+
+    function renderMonths() {
+        const list = document.getElementById('month-list');
+        list.innerHTML = "";
+        for(let i=1; i<=12; i++) {
+            const isDone = localStorage.getItem(`mdone_${curY}_${i}`);
+            list.innerHTML += `<div class="m-card ${isDone?'done':''} ${curM===i?'active':''}" onclick="setMonth(${i})">BLN ${i}</div>`;
+        }
+        document.getElementById('user-display').innerText = `Investor: ${localStorage.getItem('IM_USER')}`;
+    }
+
+    function setMonth(m) {
+        curM = m;
+        renderMonths();
+        renderWeeks(m);
+    }
+
+    function renderWeeks(m) {
+        const area = document.getElementById('week-area');
+        const data = MASTER_DATA[curY][m-1];
+        if(!data) return area.innerHTML = "<center>Data belum tersedia.</center>";
+
+        area.innerHTML = `<h3 style="margin:0 0 20px 0;">📅 Sesi Bulan ${m}</h3>`;
+        data.s.forEach((s, i) => {
+            const isDone = localStorage.getItem(`task_${curY}_${m}_${i}`);
+            area.innerHTML += `
+                <div class="week-box" style="${isDone?'opacity:0.6':''}">
+                    <span class="week-tag">${s.w}</span>
+                    <h4 style="margin:5px 0">${s.t} ${isDone?'✅':''}</h4>
+                    <p style="font-size:0.75rem; color:#64748b; font-style:italic;">"${s.q}"</p>
+                    ${!isDone ? `
+                        <a href="https://www.youtube.com/watch?v=${s.v}" target="_blank" class="yt-link">▶ TONTON SESI</a>
+                        <textarea id="nt-${m}-${i}" oninput="saveNote(${m},${i})" placeholder="Tulis catatan penting..."></textarea>
+                        <button class="complete-btn" onclick="markDone(${m},${i},'${s.cert||''}')">SELESAI SESI</button>
+                    ` : `<button class="complete-btn" style="background:#f1f5f9; color:#94a3b8;" disabled>SUDAH SELESAI</button>`}
+                    ${isDone && s.cert ? `<button class="cert-btn" style="display:block;" onclick="getCert('${s.cert}')">🎓 AMBIL SERTIFIKAT</button>` : ''}
+                </div>
+            `;
+            setTimeout(() => {
+                const n = localStorage.getItem(`note_${curY}_${m}_${i}`);
+                if(n && document.getElementById(`nt-${m}-${i}`)) document.getElementById(`nt-${m}-${i}`).value = n;
+            }, 5);
+        });
+    }
+
+    function markDone(m, i, cert) {
+        confetti({ particleCount: 120, spread: 70, origin: { y: 0.8 } });
+        localStorage.setItem(`task_${curY}_${m}_${i}`, 'true');
+        
+        const mData = MASTER_DATA[curY][m-1];
+        let allDone = true;
+        mData.s.forEach((_, idx) => { if(!localStorage.getItem(`task_${curY}_${m}_${idx}`)) allDone = false; });
+        
+        if(allDone) localStorage.setItem(`mdone_${curY}_${m}`, 'true');
+        renderMonths();
+        renderWeeks(m);
+    }
+
+    function saveNote(m, i) {
+        localStorage.setItem(`note_${curY}_${m}_${i}`, document.getElementById(`nt-${m}-${i}`).value);
+    }
+
+    function switchYear(y) {
+        curY = y; curM = 0;
+        document.querySelectorAll('.y-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('tab-'+y).classList.add('active');
+        document.getElementById('week-area').innerHTML = "<center style='color:#94a3b8; margin-top:50px;'>Pilih Bulan di atas.</center>";
+        renderMonths();
+    }
+
+    function unlock(y) {
+        if(localStorage.getItem('un_'+y)) return switchYear(y);
+        const q = y === 'y2' ? "KUIS: Berapa total sektor di BEI? (Video Bln 4)" : "KUIS: Istilah 2 kata Raja Uang Tunai di Bln 9?";
+        const a = y === 'y2' ? "11" : "arus kas";
+        const userA = prompt(q);
+        if(userA && userA.toLowerCase().trim() === a) {
+            localStorage.setItem('un_'+y, 'true');
+            confetti({ particleCount: 200 });
+            switchYear(y);
+            document.getElementById('tab-'+y).innerText = "TAHUN " + y.charAt(2) + " ✅";
+        } else { alert("Jawaban salah!"); }
+    }
+
+    function getCert(lvl) {
+        document.getElementById('c-name').innerText = localStorage.getItem('IM_USER').toUpperCase();
+        document.getElementById('c-lvl').innerText = lvl;
+        const cert = document.getElementById('cert-print');
+        cert.style.left = "0";
+        html2canvas(cert).then(canvas => {
+            const a = document.createElement('a');
+            a.download = `Sertifikat_${lvl}.png`;
+            a.href = canvas.toDataURL();
+            a.click();
+            cert.style.left = "-9999px";
+        });
+    }
+
+    function exportData() {
+        const blob = new Blob([JSON.stringify(localStorage)], {type: 'text/plain'});
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'Investor_Mastery_Backup.txt';
+        a.click();
+    }
+
+    window.onload = () => {
+        if(localStorage.getItem('IM_USER')) {
+            document.getElementById('splash').style.display = 'none';
+            if(localStorage.getItem('un_y2')) document.getElementById('tab-y2').innerText = "TAHUN 2 ✅";
+            if(localStorage.getItem('un_y3')) document.getElementById('tab-y3').innerText = "TAHUN 3 ✅";
+            renderMonths();
+        }
+    };
+</script>
+</body>
+</html>
         const n = document.getElementById('userName').value;
         if(!n) return alert("Masukkan nama Anda untuk sertifikat!");
         localStorage.setItem('mastery_user', n);
