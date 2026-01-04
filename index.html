@@ -2,105 +2,117 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3-Year Investor Mastery Dashboard</title>
     <style>
         :root { --primary: #2c3e50; --secondary: #27ae60; --gold: #d4af37; --accent: #3498db; --bg: #f4f7f6; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); margin: 0; padding: 0; line-height: 1.6; }
         
-        /* SPLASH SCREEN */
-        #splash { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, var(--primary), var(--secondary)); display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; z-index: 10000; text-align: center; }
-        .btn-start { padding: 15px 40px; border-radius: 30px; border: none; background: white; color: var(--secondary); font-weight: bold; cursor: pointer; margin-top: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        #splash { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, var(--primary), var(--secondary)); display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; z-index: 10000; text-align: center; padding: 20px; box-sizing: border-box; }
+        .btn-start { padding: 15px 40px; border-radius: 30px; border: none; background: white; color: var(--secondary); font-weight: bold; cursor: pointer; margin-top: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); font-size: 1.1rem; transition: 0.3s; }
+        .btn-start:hover { transform: scale(1.05); }
 
         .container { max-width: 900px; margin: 20px auto; background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); overflow: hidden; }
         .tab-nav { display: flex; background: var(--primary); }
-        .tab-btn { flex: 1; padding: 20px; color: white; border: none; background: none; cursor: pointer; font-weight: bold; }
+        .tab-btn { flex: 1; padding: 20px; color: white; border: none; background: none; cursor: pointer; font-weight: bold; font-size: 1rem; transition: 0.3s; border-bottom: 4px solid transparent; }
         .tab-btn.active { background: rgba(255,255,255,0.1); border-bottom: 4px solid var(--gold); }
         .tab-btn.disabled { opacity: 0.4; cursor: not-allowed; }
 
-        .content { padding: 30px; display: none; }
+        .content { padding: 30px; display: none; min-height: 500px; }
         .content.active { display: block; }
 
-        progress { width: 100%; height: 20px; accent-color: var(--secondary); margin-bottom: 20px; }
+        .progress-container { padding: 20px; text-align: center; border-bottom: 1px solid #eee; background: #fff; }
+        progress { width: 100%; height: 20px; accent-color: var(--secondary); border-radius: 10px; }
         
-        .task-row { background: #fff; border: 1px solid #eee; padding: 15px; margin-bottom: 10px; border-radius: 12px; border-left: 5px solid var(--accent); }
-        .task-main { display: flex; align-items: center; justify-content: space-between; }
-        input[type="checkbox"] { transform: scale(1.4); margin-right: 15px; }
+        .task-row { background: #fff; border: 1px solid #eee; padding: 18px; margin-bottom: 15px; border-radius: 12px; border-left: 6px solid var(--accent); transition: 0.3s; }
+        .task-main { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+        .task-info { display: flex; align-items: center; font-size: 1.05rem; }
+        input[type="checkbox"] { transform: scale(1.5); margin-right: 15px; cursor: pointer; }
         
-        .btn-video { background: #ff0000; color: white; text-decoration: none; padding: 5px 10px; border-radius: 5px; font-size: 12px; margin-right: 5px; }
-        .btn-note { background: var(--accent); color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 12px; }
+        .btn-video { background: #ff0000; color: white; text-decoration: none; padding: 8px 15px; border-radius: 6px; font-size: 13px; margin-right: 8px; font-weight: bold; display: inline-block; }
+        .btn-note { background: var(--accent); color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: bold; }
 
-        /* GIFT BOX */
-        .gift-container { display: none; margin-top: 10px; padding: 10px; background: #fffdf0; border: 1px dashed var(--gold); border-radius: 8px; text-align: center; }
-        .gift-icon { font-size: 30px; cursor: pointer; }
-        .gift-content { display: none; margin-top: 10px; text-align: left; font-size: 0.9rem; }
-        .quote { color: var(--secondary); font-style: italic; font-weight: bold; display: block; }
+        .gift-container { display: none; margin-top: 15px; padding: 15px; background: #fffdf0; border: 1px dashed var(--gold); border-radius: 10px; text-align: center; animation: slideDown 0.4s ease; }
+        .gift-icon { font-size: 40px; cursor: pointer; transition: 0.3s; }
+        .gift-content { display: none; margin-top: 10px; text-align: left; background: white; padding: 15px; border-radius: 8px; border: 1px solid #eee; color: #333; }
+        .quote { color: var(--secondary); font-style: italic; font-weight: bold; display: block; margin-bottom: 8px; border-bottom: 1px solid #eee; padding-bottom: 5px; font-size: 1.1rem; }
         
-        .lock-msg { background: #fff3cd; color: #856404; padding: 20px; border-radius: 10px; text-align: center; margin-bottom: 20px; }
-        textarea { width: 100%; margin-top: 10px; display: none; padding: 10px; border-radius: 5px; border: 1px solid #ddd; }
+        .lock-msg { background: #fff3cd; color: #856404; padding: 30px; border-radius: 12px; text-align: center; border: 1px solid #ffeeba; margin-top: 20px; }
+        textarea { width: 100%; margin-top: 12px; display: none; padding: 12px; border-radius: 8px; border: 1px solid #ddd; font-family: inherit; box-sizing: border-box; min-height: 80px; }
+        
+        @keyframes slideDown { from { transform: translateY(-10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
     </style>
 </head>
 <body>
 
 <div id="splash">
-    <h1>JANGAN MENYERAH!!! 🔥</h1>
-    <p>"Investasi terbaik adalah investasi pada leher ke atas (ilmu)."</p>
-    <button class="btn-start" onclick="startApp()">SAYA MULAI PERJALANAN 3 TAHUN</button>
+    <h1 style="font-size: 2.5rem;">JANGAN MENYERAH!!! 🔥</h1>
+    <p style="font-size: 1.2rem; max-width: 600px;">"Perjalanan seribu mil dimulai dengan satu langkah kecil. Tetaplah konsisten!"</p>
+    <button class="btn-start" onclick="startApp()">MULAI SEKARANG</button>
 </div>
 
 <div class="container">
     <div class="tab-nav">
-        <button class="tab-btn active" onclick="openYear(event, 'year1')">TAHUN 1</button>
-        <button id="btn-y2" class="tab-btn disabled" onclick="openYear(event, 'year2')">TAHUN 2 🔒</button>
-        <button id="btn-y3" class="tab-btn disabled" onclick="openYear(event, 'year3')">TAHUN 3 🔒</button>
+        <button id="btn-y1" class="tab-btn active" onclick="openTab(event, 'year1')">TAHUN 1</button>
+        <button id="btn-y2" class="tab-btn disabled" onclick="verifyProgress(event, 'year2')">TAHUN 2 🔒</button>
+        <button id="btn-y3" class="tab-btn disabled" onclick="verifyProgress(event, 'year3')">TAHUN 3 🔒</button>
     </div>
 
-    <div style="padding: 20px; text-align: center;">
+    <div class="progress-container">
         <progress id="mainProgress" value="0" max="100"></progress>
-        <p id="progressLabel">Progress Belajar: 0%</p>
+        <p id="progressLabel" style="font-weight: bold; margin-top: 10px; font-size: 1.1rem; color: var(--primary);">Total Progress Belajar: 0%</p>
     </div>
 
     <div id="year1" class="content active">
-        <h3>Tahun 1: Membangun Literasi & Psikologi</h3>
-        <div id="tasks-y1"></div>
+        <h2 style="color: var(--primary); border-bottom: 2px solid #eee; padding-bottom: 10px;">Tahun 1: Membangun Fondasi & Literasi</h2>
+        <div id="tasks-year1"></div>
     </div>
 
     <div id="year2" class="content">
-        <div id="lock2" class="lock-msg">🔒 Terbuka setelah 180 hari & Validasi Mindset Tahun 1.</div>
-        <div id="body-y2" style="display:none">
-            <h3>Tahun 2: Analisis Fundamental & Valuasi Lanjutan</h3>
-            <div id="tasks-y2"></div>
+        <div id="lock2" class="lock-msg">🔒 Terkunci. Tersisa <span id="days2">...</span> hari belajar di Tahun 1.</div>
+        <div id="body-year2" style="display:none">
+            <h2 style="color: var(--primary); border-bottom: 2px solid #eee; padding-bottom: 10px;">Tahun 2: Analisis Fundamental & Valuasi</h2>
+            <div id="tasks-year2"></div>
         </div>
     </div>
 
     <div id="year3" class="content">
-        <div id="lock3" class="lock-msg">🔒 Terbuka setelah 360 hari & Validasi Mindset Tahun 2.</div>
-        <div id="body-y3" style="display:none">
-            <h3>Tahun 3: Portofolio Management & Financial Freedom</h3>
-            <div id="tasks-y3"></div>
+        <div id="lock3" class="lock-msg">🔒 Terkunci. Tersisa <span id="days3">...</span> hari belajar di Tahun 2.</div>
+        <div id="body-year3" style="display:none">
+            <h2 style="color: var(--primary); border-bottom: 2px solid #eee; padding-bottom: 10px;">Tahun 3: Portfolio Pro & Financial Freedom</h2>
+            <div id="tasks-year3"></div>
         </div>
     </div>
 </div>
 
 <script>
-    // DATA MATERI 3 TAHUN
     const curriculum = {
         year1: [
-            { t: "M1: Apa itu Saham & Logika Bisnis", q: "Selalu konsisten!", u: "Saham adalah bukti kepemilikan perusahaan nyata.", v: "tQXX-npOeUY" },
-            { t: "M2: High Risk High Return & Uang Dingin", q: "Ketenangan adalah kunci.", u: "Gunakan uang yang tidak akan dipakai dalam 5 tahun.", v: "MXj1oSUEVv8" },
-            { t: "M3: Perbedaan Investasi vs Judi", q: "Gunakan data, bukan insting.", u: "Investasi punya aset dasar, judi hanya spekulasi.", v: "7enFJSZgqE0" },
-            { t: "M4: Mengenal 11 Sektor di BEI", q: "Pahami medannya!", u: "Beda sektor, beda karakter bisnisnya.", v: "ir625-6bSSI" }
+            { t: "Bulan 1: Logika Kepemilikan Bisnis", q: "Selalu konsisten!", u: "Saham adalah bukti sah kepemilikan bisnis nyata.", v: "tQXX-npOeUY" },
+            { t: "Bulan 2: Psikologi & Uang Dingin", q: "Ketenangan adalah aset.", u: "Jangan gunakan uang panas untuk investasi.", v: "MXj1oSUEVv8" },
+            { t: "Bulan 3: Bursa Efek & Legalitas OJK", q: "Keamanan itu nomor satu.", u: "Pastikan broker terdaftar OJK.", v: "AtL8aVvgK4U" },
+            { t: "Bulan 4: Mengenal 11 Sektor Saham", q: "Pahami medannya!", u: "Setiap sektor punya siklus berbeda.", v: "ir625-6bSSI" },
+            { t: "Bulan 5: Dividen vs Capital Gain", q: "Tanam & Tuai hasilnya.", u: "Dua cara investor mendapatkan keuntungan.", v: "7enFJSZgqE0" },
+            { t: "Bulan 6: Cara Baca Order Book & Bid-Offer", q: "Jangan terpancing harga!", u: "Fokus pada fundamental, bukan running trade.", v: "AtL8aVvgK4U" },
+            { t: "Bulan 7: Laporan Laba Rugi", q: "Cek profitnya!", u: "Laba bersih yang naik mencerminkan bisnis bagus.", v: "tQXX-npOeUY" },
+            { t: "Bulan 8: Neraca (Aset & Hutang)", q: "Kekuatan modal adalah kunci.", u: "Hindari perusahaan yang hutangnya terlalu menumpuk.", v: "MXj1oSUEVv8" },
+            { t: "Bulan 9: Arus Kas (Cashflow)", q: "Uang tunai adalah Raja!", u: "Profit tanpa cashflow hanyalah angka di atas kertas.", v: "ir625-6bSSI" }
         ],
         year2: [
-            { t: "M13: Valuasi PER & PBV", q: "Beli murah, jual mahal.", u: "Harga wajar ditentukan oleh laba dan aset.", v: "tQXX-npOeUY" },
-            { t: "M14: Membaca Laporan Tahunan", q: "Kenali nakhodanya.", u: "Annual report adalah jendela masa depan perusahaan.", v: "AtL8aVvgK4U" }
+            { t: "Bulan 13: Valuasi PER & PBV", q: "Beli murah, jual wajar.", u: "Menghitung harga murah atau mahal sebuah saham.", v: "tQXX-npOeUY" },
+            { t: "Bulan 14: Nilai Intrinsik (DCF)", q: "Melihat masa depan.", u: "Menghitung nilai riil bisnis hari ini.", v: "AtL8aVvgK4U" }
         ],
         year3: [
-            { t: "M25: Strategi Diversifikasi", q: "Jangan taruh semua telur di satu keranjang.", u: "Bagi risiko ke beberapa sektor berbeda.", v: "tQXX-npOeUY" },
-            { t: "M36: Rencana Financial Freedom", q: "Selamat! Kamu hampir sampai.", u: "Hidup dari dividen adalah tujuan akhir.", v: "tQXX-npOeUY" }
+            { t: "Bulan 25: Portfolio Rebalancing", q: "Jaga keseimbangan.", u: "Mengatur ulang porsi saham agar tetap aman.", v: "7enFJSZgqE0" },
+            { t: "Bulan 36: Dividen Freedom", q: "Selamat! Kamu sampai.", u: "Hidup dari bagi hasil laba perusahaan.", v: "tQXX-npOeUY" }
         ]
     };
 
     const KEYS = { year2: "saham adalah bisnis", year3: "sabar adalah kunci" };
+    const SUMMARIES = {
+        year2: "RINGKASAN TAHUN 1:\n- Saham = Bisnis Nyata.\n- Psikologi > Analisis.\n- Laporan Keuangan adalah kompas.",
+        year3: "RINGKASAN TAHUN 2:\n- Valuasi adalah kunci agar tidak terjebak harga mahal.\n- Fokus pada perusahaan berkualitas dengan harga wajar."
+    };
 
     function startApp() {
         if (!localStorage.getItem('studyStart')) localStorage.setItem('studyStart', new Date().getTime());
@@ -112,28 +124,64 @@
     function renderTasks() {
         ['year1', 'year2', 'year3'].forEach(year => {
             const container = document.getElementById('tasks-' + year);
-            if (!container) return;
-            container.innerHTML = curriculum[year].map((item, i) => `
+            if(container) container.innerHTML = curriculum[year].map((item, i) => `
                 <div class="task-row">
                     <div class="task-main">
-                        <div><input type="checkbox" class="cb" onchange="update()"> <b>${item.t}</b></div>
-                        <div>
-                            <a href="https://www.youtube.com/watch?v=${item.v}" target="_blank" class="btn-video">📺 Video</a>
-                            <button class="btn-note" onclick="toggle('n-${year}-${i}')">📝 Catatan</button>
-                        </div>
+                        <div class="task-info"><input type="checkbox" class="cb" id="cb-${year}-${i}" onchange="updateUI()"> <b>${item.t}</b></div>
+                        <div><a href="https://www.youtube.com/watch?v=${item.v}" target="_blank" class="btn-video">📺 Video</a>
+                        <button class="btn-note" onclick="toggle('n-${year}-${i}')">📝 Catatan</button></div>
                     </div>
                     <div class="gift-container" id="g-${year}-${i}">
                         <div class="gift-icon" onclick="toggle('gc-${year}-${i}')">🎁</div>
                         <div id="gc-${year}-${i}" class="gift-content">
                             <span class="quote">"${item.q}"</span>
-                            <p><b>Pemahaman:</b> ${item.u}</p>
+                            <div><b>Inti Materi:</b> ${item.u}</div>
                         </div>
                     </div>
-                    <textarea id="n-${year}-${i}" oninput="save()"></textarea>
+                    <textarea id="n-${year}-${i}" oninput="saveData()" placeholder="Apa hal terpenting yang kamu pelajari hari ini?"></textarea>
                 </div>
             `).join('');
         });
         loadData();
+    }
+
+    function verifyProgress(evt, yearId) {
+        const start = parseInt(localStorage.getItem('studyStart'));
+        const days = Math.floor((new Date().getTime() - start) / (1000 * 60 * 60 * 24));
+        const limit = yearId === 'year2' ? 180 : 360;
+
+        if (days < limit) {
+            alert(`Terkunci! Kurang ${limit - days} hari lagi. Belajarlah dengan relax.`);
+            return;
+        }
+
+        if (localStorage.getItem(yearId + '_validated')) {
+            openTab(evt, yearId);
+            return;
+        }
+
+        let choice = prompt("Pemeriksaan Pemahaman:\n1. Ya, saya sudah paham materi sebelumnya.\n2. Tidak, saya butuh belajar lagi.\n3. Jelaskan ringkasan materi sebelumnya.");
+        
+        if (choice === "1") {
+            let key = prompt(`Masukkan Kunci Mindset untuk ${yearId}:`);
+            if (key && key.toLowerCase() === KEYS[yearId]) {
+                alert("Verifikasi Berhasil! Selamat datang di jenjang berikutnya.");
+                localStorage.setItem(yearId + '_validated', 'true');
+                openTab(evt, yearId);
+            } else { alert("Kunci Mindset salah!"); }
+        } else if (choice === "2") {
+            alert("Bagus! Jangan terburu-buru. Ulangi materi tahun sebelumnya sampai benar-benar paham.");
+        } else if (choice === "3") {
+            alert(SUMMARIES[yearId]);
+            verifyProgress(evt, yearId);
+        }
+    }
+
+    function openTab(evt, id) {
+        document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        evt.currentTarget.classList.add('active');
     }
 
     function toggle(id) {
@@ -141,166 +189,49 @@
         el.style.display = (el.style.display === 'block') ? 'none' : 'block';
     }
 
-    function update() {
-        const total = document.querySelectorAll('.cb').length;
+    function updateUI() {
+        const cbs = document.querySelectorAll('.cb');
         const checked = document.querySelectorAll('.cb:checked').length;
-        const percent = Math.round((checked / total) * 100);
-        document.getElementById('mainProgress').value = percent;
-        document.getElementById('progressLabel').innerText = `Progress Belajar: ${percent}%`;
-
-        document.querySelectorAll('.cb').forEach((cb, i) => {
-            const gift = document.querySelectorAll('.gift-container')[i];
-            gift.style.display = cb.checked ? 'block' : 'none';
+        const progress = Math.round((checked / cbs.length) * 100);
+        document.getElementById('mainProgress').value = progress;
+        document.getElementById('progressLabel').innerText = `Total Progress Belajar: ${progress}%`;
+        
+        cbs.forEach(cb => {
+            const gift = document.getElementById(cb.id.replace('cb-', 'g-'));
+            if(gift) gift.style.display = cb.checked ? 'block' : 'none';
         });
-        save();
-    }
-
-    function openYear(evt, id) {
-        const start = parseInt(localStorage.getItem('studyStart'));
-        const days = Math.floor((new Date().getTime() - start) / (1000 * 60 * 60 * 24));
-        const limit = id === 'year2' ? 180 : (id === 'year3' ? 360 : 0);
-
-        if (days < limit) {
-            alert(`Terkunci! Kurang ${limit - days} hari lagi.`);
-            return;
-        }
-
-        if (id !== 'year1' && !localStorage.getItem(id + '_ok')) {
-            let ans = prompt(`Masukkan Kunci Mindset untuk ${id}:`);
-            if (ans && ans.toLowerCase() === KEYS[id]) {
-                localStorage.setItem(id + '_ok', 'true');
-            } else { alert("Mindset salah!"); return; }
-        }
-
-        document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        evt.currentTarget.classList.add('active');
+        saveData();
     }
 
     function checkLocks() {
         const start = parseInt(localStorage.getItem('studyStart'));
         const days = Math.floor((new Date().getTime() - start) / (1000 * 60 * 60 * 24));
-        if (days >= 180) { document.getElementById('btn-y2').classList.remove('disabled'); document.getElementById('lock2').style.display='none'; document.getElementById('body-y2').style.display='block'; }
-        if (days >= 360) { document.getElementById('btn-y3').classList.remove('disabled'); document.getElementById('lock3').style.display='none'; document.getElementById('body-y3').style.display='block'; }
+        if (days >= 180) { document.getElementById('btn-y2').classList.remove('disabled'); document.getElementById('lock2').style.display='none'; document.getElementById('body-year2').style.display='block'; }
+        else { document.getElementById('days2').innerText = 180 - days; }
+        if (days >= 360) { document.getElementById('btn-y3').classList.remove('disabled'); document.getElementById('lock3').style.display='none'; document.getElementById('body-year3').style.display='block'; }
+        else { document.getElementById('days3').innerText = 360 - days; }
     }
 
-    function save() {
-        const data = Array.from(document.querySelectorAll('.cb')).map((cb, i) => ({ c: cb.checked, n: document.querySelectorAll('textarea')[i].value }));
-        localStorage.setItem('saham_3yr_db', JSON.stringify(data));
+    function saveData() {
+        const data = {};
+        document.querySelectorAll('.cb').forEach(cb => data[cb.id] = cb.checked);
+        document.querySelectorAll('textarea').forEach(tx => data[tx.id] = tx.value);
+        localStorage.setItem('investor_mastery_vFinal', JSON.stringify(data));
     }
 
     function loadData() {
-        const saved = JSON.parse(localStorage.getItem('saham_3yr_db'));
+        const saved = JSON.parse(localStorage.getItem('investor_mastery_vFinal'));
         if (saved) {
-            document.querySelectorAll('.cb').forEach((cb, i) => {
-                if (saved[i]) {
-                    cb.checked = saved[i].c;
-                    document.querySelectorAll('textarea')[i].value = saved[i].n;
-                }
-            });
-            update();
-        }
-        if (localStorage.getItem('studyStart')) { document.getElementById('splash').style.display = 'none'; checkLocks(); }
-    }
-    window.onload = startApp;
-</script>
-</body>
-</html>
-
-    function tn(id) {
-        const el = document.getElementById(id);
-        el.style.display = el.style.display === 'block' ? 'none' : 'block';
-    }
-
-    function update() {
-        const cbs = document.querySelectorAll('.cb');
-        const checked = document.querySelectorAll('.cb:checked').length;
-        const total = cbs.length;
-        const percent = Math.round((checked / total) * 100);
-        
-        document.getElementById('bar').style.width = percent + '%';
-        document.getElementById('percent-text').innerText = percent + '% Selesai';
-
-        // LOGIKA UNLOCK
-        // Jika Kuartal 1 (index 0 & 1) selesai, buka Kuartal 2
-        const q1Tasks = document.querySelectorAll('#qc1 .cb');
-        const q1Done = Array.from(q1Tasks).every(c => c.checked);
-        
-        if (q1Done) {
-            document.getElementById('q2').classList.remove('locked');
-            document.getElementById('q2').style.pointerEvents = 'auto';
-        } else {
-            document.getElementById('q2').classList.add('locked');
-        }
-
-        save();
-    }
-
-    function save() {
-        const data = Array.from(document.querySelectorAll('.cb')).map((c, i) => ({
-            c: c.checked,
-            n: document.querySelectorAll('textarea')[i].value
-        }));
-        localStorage.setItem('mastery3yr', JSON.stringify(data));
-    }
-
-    function load() {
-        const saved = JSON.parse(localStorage.getItem('mastery3yr'));
-        if (saved) {
-            const cbs = document.querySelectorAll('.cb');
-            const txts = document.querySelectorAll('textarea');
-            saved.forEach((item, i) => {
-                if(cbs[i]) cbs[i].checked = item.c;
-                if(txts[i]) txts[i].value = item.n;
-            });
-            update();
+            for (let id in saved) {
+                const el = document.getElementById(id);
+                if (el) { if (el.type === 'checkbox') el.checked = saved[id]; else el.value = saved[id]; }
+            }
+            updateUI();
         }
     }
 
-    window.onload = load;
+    window.onload = () => { if(localStorage.getItem('studyStart')) startApp(); };
 </script>
-
-</body>
-</html>
-                    <li><input type="checkbox"> Menghitung Risk to Reward</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="quarter">
-        <h2 class="quarter-title" style="background: #e74c3c;">Kuartal 4: Portofolio & Review</h2>
-        <p><i>Fokus: Menyusun "Keranjang" saham sendiri dan evaluasi.</i></p>
-        <div class="month-grid">
-            <div class="month-card">
-                <h3>Bulan 10-12</h3>
-                <ul>
-                    <li><input type="checkbox"> Diversifikasi vs Konsentrasi</li>
-                    <li><input type="checkbox"> Cara Rebalancing Portofolio</li>
-                    <li><input type="checkbox"> Review Kinerja 1 Tahun</li>
-                    <li><input type="checkbox"> Menyusun Plan Tahun ke-2</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-<script>
-    // Script sederhana untuk progres bar
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    const progressBar = document.getElementById('file');
-    
-    checkboxes.forEach(cb => {
-        cb.addEventListener('change', () => {
-            const checked = document.querySelectorAll('input[type="checkbox"]:checked').length;
-            const total = checkboxes.length;
-            progressBar.value = (checked / total) * 100;
-        });
-    });
-</script>
-
 </body>
 </html>
 
