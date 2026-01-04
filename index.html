@@ -2,116 +2,211 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3 Years Stock Mastery</title>
+    <title>3-Year Investor Mastery Dashboard</title>
     <style>
-        :root { --primary: #1a1a1a; --secondary: #27ae60; --locked: #95a5a6; --accent: #3498db; }
-        body { font-family: 'Inter', sans-serif; background: #f4f4f9; margin: 0; padding: 0; }
+        :root { --primary: #2c3e50; --secondary: #27ae60; --gold: #d4af37; --accent: #3498db; --bg: #f4f7f6; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 0; }
         
         /* SPLASH SCREEN */
-        #splash { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #1a1a1a, #27ae60); 
-                  display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; z-index: 1000; transition: 0.5s; }
-        
-        /* CONTAINER */
-        .container { max-width: 900px; margin: 20px auto; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        .header { text-align: center; border-bottom: 2px solid #eee; margin-bottom: 30px; }
-        
-        /* PROGRESS BAR */
-        .overall-progress { margin: 20px 0; background: #eee; border-radius: 10px; height: 30px; overflow: hidden; position: relative; }
-        #bar { height: 100%; background: var(--secondary); width: 0%; transition: 0.5s; }
-        #percent-text { position: absolute; width: 100%; text-align: center; line-height: 30px; font-weight: bold; }
+        #splash { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, var(--primary), var(--secondary)); display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; z-index: 10000; text-align: center; }
+        .btn-start { padding: 15px 40px; border-radius: 30px; border: none; background: white; color: var(--secondary); font-weight: bold; cursor: pointer; margin-top: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
 
-        /* QUARTER BOX */
-        .quarter { border: 2px solid #eee; border-radius: 15px; margin-bottom: 20px; overflow: hidden; }
-        .quarter-header { background: #f8f9fa; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
-        .quarter-content { padding: 20px; display: none; }
-        
-        /* LOCKED STATE */
-        .locked { opacity: 0.6; filter: grayscale(1); pointer-events: none; position: relative; }
-        .locked::after { content: "🔒 TERKUNCI - SELESAIKAN TAHAP SEBELUMNYA"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); 
-                         background: rgba(0,0,0,0.8); color: white; padding: 10px 20px; border-radius: 5px; font-weight: bold; }
+        .container { max-width: 900px; margin: 20px auto; background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); overflow: hidden; }
+        .tab-nav { display: flex; background: var(--primary); }
+        .tab-btn { flex: 1; padding: 20px; color: white; border: none; background: none; cursor: pointer; font-weight: bold; }
+        .tab-btn.active { background: rgba(255,255,255,0.1); border-bottom: 4px solid var(--gold); }
+        .tab-btn.disabled { opacity: 0.4; cursor: not-allowed; }
 
-        .task-row { display: flex; align-items: center; justify-content: space-between; padding: 12px; border-bottom: 1px solid #eee; }
-        .btn-video { background: #ff0000; color: white; text-decoration: none; padding: 5px 10px; border-radius: 5px; font-size: 12px; }
+        .content { padding: 30px; display: none; }
+        .content.active { display: block; }
+
+        progress { width: 100%; height: 20px; accent-color: var(--secondary); margin-bottom: 20px; }
+        
+        .task-row { background: #fff; border: 1px solid #eee; padding: 15px; margin-bottom: 10px; border-radius: 12px; border-left: 5px solid var(--accent); }
+        .task-main { display: flex; align-items: center; justify-content: space-between; }
+        input[type="checkbox"] { transform: scale(1.4); margin-right: 15px; }
+        
+        .btn-video { background: #ff0000; color: white; text-decoration: none; padding: 5px 10px; border-radius: 5px; font-size: 12px; margin-right: 5px; }
         .btn-note { background: var(--accent); color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 12px; }
-        textarea { width: 100%; margin-top: 10px; display: none; border-radius: 5px; padding: 10px; border: 1px solid #ccc; }
+
+        /* GIFT BOX */
+        .gift-container { display: none; margin-top: 10px; padding: 10px; background: #fffdf0; border: 1px dashed var(--gold); border-radius: 8px; text-align: center; }
+        .gift-icon { font-size: 30px; cursor: pointer; }
+        .gift-content { display: none; margin-top: 10px; text-align: left; font-size: 0.9rem; }
+        .quote { color: var(--secondary); font-style: italic; font-weight: bold; display: block; }
         
-        h2 { margin: 0; font-size: 1.2rem; }
-        .year-tag { background: var(--primary); color: white; padding: 3px 10px; border-radius: 5px; font-size: 0.8rem; }
+        .lock-msg { background: #fff3cd; color: #856404; padding: 20px; border-radius: 10px; text-align: center; margin-bottom: 20px; }
+        textarea { width: 100%; margin-top: 10px; display: none; padding: 10px; border-radius: 5px; border: 1px solid #ddd; }
     </style>
 </head>
 <body>
 
 <div id="splash">
-    <h1 style="font-size: 3rem;">JANGAN MENYERAH!!! 🔥</h1>
-    <p>"Satu hari kamu akan berterima kasih pada dirimu yang hari ini belajar."</p>
-    <button onclick="document.getElementById('splash').style.display='none'" 
-            style="padding: 15px 40px; border-radius: 30px; border: none; cursor: pointer; font-weight: bold; font-size: 1.1rem;">SAYA MULAI MARATON 3 TAHUN!</button>
+    <h1>JANGAN MENYERAH!!! 🔥</h1>
+    <p>"Investasi terbaik adalah investasi pada leher ke atas (ilmu)."</p>
+    <button class="btn-start" onclick="startApp()">SAYA MULAI PERJALANAN 3 TAHUN</button>
 </div>
 
 <div class="container">
-    <div class="header">
-        <h1>🎓 Investor Mastery: Program 3 Tahun</h1>
-        <div class="overall-progress">
-            <div id="percent-text">0% Selesai</div>
-            <div id="bar"></div>
+    <div class="tab-nav">
+        <button class="tab-btn active" onclick="openYear(event, 'year1')">TAHUN 1</button>
+        <button id="btn-y2" class="tab-btn disabled" onclick="openYear(event, 'year2')">TAHUN 2 🔒</button>
+        <button id="btn-y3" class="tab-btn disabled" onclick="openYear(event, 'year3')">TAHUN 3 🔒</button>
+    </div>
+
+    <div style="padding: 20px; text-align: center;">
+        <progress id="mainProgress" value="0" max="100"></progress>
+        <p id="progressLabel">Progress Belajar: 0%</p>
+    </div>
+
+    <div id="year1" class="content active">
+        <h3>Tahun 1: Membangun Literasi & Psikologi</h3>
+        <div id="tasks-y1"></div>
+    </div>
+
+    <div id="year2" class="content">
+        <div id="lock2" class="lock-msg">🔒 Terbuka setelah 180 hari & Validasi Mindset Tahun 1.</div>
+        <div id="body-y2" style="display:none">
+            <h3>Tahun 2: Analisis Fundamental & Valuasi Lanjutan</h3>
+            <div id="tasks-y2"></div>
         </div>
     </div>
 
-    <div id="q1" class="quarter">
-        <div class="quarter-header" onclick="toggleQ('qc1')">
-            <h2><span class="year-tag">TAHUN 1</span> Kuartal 1: Fondasi & Mekanisme</h2>
-            <span id="stat-q1">0/4 Selesai</span>
-        </div>
-        <div id="qc1" class="quarter-content" style="display: block;">
-            <div class="task-row">
-                <div><input type="checkbox" class="cb" onchange="update()"> <b>M1:</b> Logika Bisnis Saham</div>
-                <div><a href="https://www.youtube.com/results?search_query=logika+investasi+saham+pemula" target="_blank" class="btn-video">📺 Video</a> <button class="btn-note" onclick="tn('n1')">📝 Catatan</button></div>
-            </div>
-            <textarea id="n1" oninput="save()"></textarea>
-
-            <div class="task-row">
-                <div><input type="checkbox" class="cb" onchange="update()"> <b>M2:</b> Risk Management & Uang Dingin</div>
-                <div><a href="https://www.youtube.com/results?search_query=money+management+saham+pemula" target="_blank" class="btn-video">📺 Video</a> <button class="btn-note" onclick="tn('n2')">📝 Catatan</button></div>
-            </div>
-            <textarea id="n2" oninput="save()"></textarea>
-            </div>
-    </div>
-
-    <div id="q2" class="quarter locked">
-        <div class="quarter-header" onclick="toggleQ('qc2')">
-            <h2><span class="year-tag">TAHUN 1</span> Kuartal 2: Analisis Fundamental</h2>
-            <span id="stat-q2">0/4 Selesai</span>
-        </div>
-        <div id="qc2" class="quarter-content">
-            <div class="task-row">
-                <div><input type="checkbox" class="cb" onchange="update()"> <b>M5:</b> Baca Laporan Laba Rugi</div>
-                <div><a href="https://www.youtube.com/results?search_query=cara+baca+laporan+laba+rugi+saham" target="_blank" class="btn-video">📺 Video</a> <button class="btn-note" onclick="tn('n5')">📝 Catatan</button></div>
-            </div>
-            <textarea id="n5" oninput="save()"></textarea>
-        </div>
-    </div>
-
-    <div id="q3" class="quarter locked">
-        <div class="quarter-header">
-            <h2><span class="year-tag">TAHUN 2</span> Fokus: Valuasi & Ekonomi Makro</h2>
-            <span>🔒 Terkunci</span>
-        </div>
-    </div>
-
-    <div id="q4" class="quarter locked">
-        <div class="quarter-header">
-            <h2><span class="year-tag">TAHUN 3</span> Fokus: Portofolio Management</h2>
-            <span>🔒 Terkunci</span>
+    <div id="year3" class="content">
+        <div id="lock3" class="lock-msg">🔒 Terbuka setelah 360 hari & Validasi Mindset Tahun 2.</div>
+        <div id="body-y3" style="display:none">
+            <h3>Tahun 3: Portofolio Management & Financial Freedom</h3>
+            <div id="tasks-y3"></div>
         </div>
     </div>
 </div>
 
 <script>
-    function toggleQ(id) {
-        const el = document.getElementById(id);
-        el.style.display = el.style.display === 'block' ? 'none' : 'block';
+    // DATA MATERI 3 TAHUN
+    const curriculum = {
+        year1: [
+            { t: "M1: Apa itu Saham & Logika Bisnis", q: "Selalu konsisten!", u: "Saham adalah bukti kepemilikan perusahaan nyata.", v: "tQXX-npOeUY" },
+            { t: "M2: High Risk High Return & Uang Dingin", q: "Ketenangan adalah kunci.", u: "Gunakan uang yang tidak akan dipakai dalam 5 tahun.", v: "MXj1oSUEVv8" },
+            { t: "M3: Perbedaan Investasi vs Judi", q: "Gunakan data, bukan insting.", u: "Investasi punya aset dasar, judi hanya spekulasi.", v: "7enFJSZgqE0" },
+            { t: "M4: Mengenal 11 Sektor di BEI", q: "Pahami medannya!", u: "Beda sektor, beda karakter bisnisnya.", v: "ir625-6bSSI" }
+        ],
+        year2: [
+            { t: "M13: Valuasi PER & PBV", q: "Beli murah, jual mahal.", u: "Harga wajar ditentukan oleh laba dan aset.", v: "tQXX-npOeUY" },
+            { t: "M14: Membaca Laporan Tahunan", q: "Kenali nakhodanya.", u: "Annual report adalah jendela masa depan perusahaan.", v: "AtL8aVvgK4U" }
+        ],
+        year3: [
+            { t: "M25: Strategi Diversifikasi", q: "Jangan taruh semua telur di satu keranjang.", u: "Bagi risiko ke beberapa sektor berbeda.", v: "tQXX-npOeUY" },
+            { t: "M36: Rencana Financial Freedom", q: "Selamat! Kamu hampir sampai.", u: "Hidup dari dividen adalah tujuan akhir.", v: "tQXX-npOeUY" }
+        ]
+    };
+
+    const KEYS = { year2: "saham adalah bisnis", year3: "sabar adalah kunci" };
+
+    function startApp() {
+        if (!localStorage.getItem('studyStart')) localStorage.setItem('studyStart', new Date().getTime());
+        document.getElementById('splash').style.display = 'none';
+        renderTasks();
+        checkLocks();
     }
+
+    function renderTasks() {
+        ['year1', 'year2', 'year3'].forEach(year => {
+            const container = document.getElementById('tasks-' + year);
+            if (!container) return;
+            container.innerHTML = curriculum[year].map((item, i) => `
+                <div class="task-row">
+                    <div class="task-main">
+                        <div><input type="checkbox" class="cb" onchange="update()"> <b>${item.t}</b></div>
+                        <div>
+                            <a href="https://www.youtube.com/watch?v=${item.v}" target="_blank" class="btn-video">📺 Video</a>
+                            <button class="btn-note" onclick="toggle('n-${year}-${i}')">📝 Catatan</button>
+                        </div>
+                    </div>
+                    <div class="gift-container" id="g-${year}-${i}">
+                        <div class="gift-icon" onclick="toggle('gc-${year}-${i}')">🎁</div>
+                        <div id="gc-${year}-${i}" class="gift-content">
+                            <span class="quote">"${item.q}"</span>
+                            <p><b>Pemahaman:</b> ${item.u}</p>
+                        </div>
+                    </div>
+                    <textarea id="n-${year}-${i}" oninput="save()"></textarea>
+                </div>
+            `).join('');
+        });
+        loadData();
+    }
+
+    function toggle(id) {
+        const el = document.getElementById(id);
+        el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+    }
+
+    function update() {
+        const total = document.querySelectorAll('.cb').length;
+        const checked = document.querySelectorAll('.cb:checked').length;
+        const percent = Math.round((checked / total) * 100);
+        document.getElementById('mainProgress').value = percent;
+        document.getElementById('progressLabel').innerText = `Progress Belajar: ${percent}%`;
+
+        document.querySelectorAll('.cb').forEach((cb, i) => {
+            const gift = document.querySelectorAll('.gift-container')[i];
+            gift.style.display = cb.checked ? 'block' : 'none';
+        });
+        save();
+    }
+
+    function openYear(evt, id) {
+        const start = parseInt(localStorage.getItem('studyStart'));
+        const days = Math.floor((new Date().getTime() - start) / (1000 * 60 * 60 * 24));
+        const limit = id === 'year2' ? 180 : (id === 'year3' ? 360 : 0);
+
+        if (days < limit) {
+            alert(`Terkunci! Kurang ${limit - days} hari lagi.`);
+            return;
+        }
+
+        if (id !== 'year1' && !localStorage.getItem(id + '_ok')) {
+            let ans = prompt(`Masukkan Kunci Mindset untuk ${id}:`);
+            if (ans && ans.toLowerCase() === KEYS[id]) {
+                localStorage.setItem(id + '_ok', 'true');
+            } else { alert("Mindset salah!"); return; }
+        }
+
+        document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        evt.currentTarget.classList.add('active');
+    }
+
+    function checkLocks() {
+        const start = parseInt(localStorage.getItem('studyStart'));
+        const days = Math.floor((new Date().getTime() - start) / (1000 * 60 * 60 * 24));
+        if (days >= 180) { document.getElementById('btn-y2').classList.remove('disabled'); document.getElementById('lock2').style.display='none'; document.getElementById('body-y2').style.display='block'; }
+        if (days >= 360) { document.getElementById('btn-y3').classList.remove('disabled'); document.getElementById('lock3').style.display='none'; document.getElementById('body-y3').style.display='block'; }
+    }
+
+    function save() {
+        const data = Array.from(document.querySelectorAll('.cb')).map((cb, i) => ({ c: cb.checked, n: document.querySelectorAll('textarea')[i].value }));
+        localStorage.setItem('saham_3yr_db', JSON.stringify(data));
+    }
+
+    function loadData() {
+        const saved = JSON.parse(localStorage.getItem('saham_3yr_db'));
+        if (saved) {
+            document.querySelectorAll('.cb').forEach((cb, i) => {
+                if (saved[i]) {
+                    cb.checked = saved[i].c;
+                    document.querySelectorAll('textarea')[i].value = saved[i].n;
+                }
+            });
+            update();
+        }
+        if (localStorage.getItem('studyStart')) { document.getElementById('splash').style.display = 'none'; checkLocks(); }
+    }
+    window.onload = startApp;
+</script>
+</body>
+</html>
 
     function tn(id) {
         const el = document.getElementById(id);
