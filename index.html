@@ -3,224 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3-Year Investor Mastery Dashboard</title>
+    <title>Investor Mastery Pro - Clue Edition</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        :root { --primary: #2c3e50; --secondary: #27ae60; --gold: #d4af37; --accent: #3498db; --bg: #f4f7f6; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); margin: 0; padding: 0; line-height: 1.6; }
-        
-        #splash { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, var(--primary), var(--secondary)); display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; z-index: 10000; text-align: center; padding: 20px; box-sizing: border-box; }
-        .btn-start { padding: 15px 40px; border-radius: 30px; border: none; background: white; color: var(--secondary); font-weight: bold; cursor: pointer; margin-top: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); font-size: 1.1rem; transition: 0.3s; }
-        .btn-start:hover { transform: scale(1.05); }
-
-        .container { max-width: 900px; margin: 20px auto; background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); overflow: hidden; }
-        .tab-nav { display: flex; background: var(--primary); }
-        .tab-btn { flex: 1; padding: 20px; color: white; border: none; background: none; cursor: pointer; font-weight: bold; font-size: 1rem; transition: 0.3s; border-bottom: 4px solid transparent; }
-        .tab-btn.active { background: rgba(255,255,255,0.1); border-bottom: 4px solid var(--gold); }
-        .tab-btn.disabled { opacity: 0.4; cursor: not-allowed; }
-
-        .content { padding: 30px; display: none; min-height: 500px; }
-        .content.active { display: block; }
-
-        .progress-container { padding: 20px; text-align: center; border-bottom: 1px solid #eee; background: #fff; }
-        progress { width: 100%; height: 20px; accent-color: var(--secondary); border-radius: 10px; }
-        
-        .task-row { background: #fff; border: 1px solid #eee; padding: 18px; margin-bottom: 15px; border-radius: 12px; border-left: 6px solid var(--accent); transition: 0.3s; }
-        .task-main { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
-        .task-info { display: flex; align-items: center; font-size: 1.05rem; }
-        input[type="checkbox"] { transform: scale(1.5); margin-right: 15px; cursor: pointer; }
-        
-        .btn-video { background: #ff0000; color: white; text-decoration: none; padding: 8px 15px; border-radius: 6px; font-size: 13px; margin-right: 8px; font-weight: bold; display: inline-block; }
-        .btn-note { background: var(--accent); color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: bold; }
-
-        .gift-container { display: none; margin-top: 15px; padding: 15px; background: #fffdf0; border: 1px dashed var(--gold); border-radius: 10px; text-align: center; animation: slideDown 0.4s ease; }
-        .gift-icon { font-size: 40px; cursor: pointer; transition: 0.3s; }
-        .gift-content { display: none; margin-top: 10px; text-align: left; background: white; padding: 15px; border-radius: 8px; border: 1px solid #eee; color: #333; }
-        .quote { color: var(--secondary); font-style: italic; font-weight: bold; display: block; margin-bottom: 8px; border-bottom: 1px solid #eee; padding-bottom: 5px; font-size: 1.1rem; }
-        
-        .lock-msg { background: #fff3cd; color: #856404; padding: 30px; border-radius: 12px; text-align: center; border: 1px solid #ffeeba; margin-top: 20px; }
-        textarea { width: 100%; margin-top: 12px; display: none; padding: 12px; border-radius: 8px; border: 1px solid #ddd; font-family: inherit; box-sizing: border-box; min-height: 80px; }
-        
-        @keyframes slideDown { from { transform: translateY(-10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        :root { 
+            --primary: #2c3e50; --secondary: #27ae60; --gold: #d4af37; --accent: #3498db; --bg: #f8f9fa; 
+            --y1-grad: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            --y2-grad: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            --y3-grad: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 0; }
+        #splash { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, var(--primary), var(--secondary)); display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; z-index: 10000; text-align: center; }
+        .btn-start { padding: 15px 40px; border-radius: 30px; border: none; background: white; color: var(--secondary); font-weight: bold; cursor: pointer; margin-top: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .container { max-width: 850px; margin: 30px auto; background: white; border-radius: 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); overflow: hidden; }
+        .tab-nav { display: flex; background: var(--primary); padding: 10px; gap: 10px; }
+        .tab-btn { flex: 1; padding: 15px; color: white; border: none; background: rgba(255,255,255,0.1); border-radius: 15px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .tab-btn.active { background: white; color: var(--primary); }
+        .tab-btn.locked { opacity: 0.5; }
+        .content-tab { padding: 25px; display: none; }
+        .task-row { margin-bottom: 40px; border-bottom: 2px dashed #eee; padding-bottom: 30px; }
+        .snapshot-card { padding: 25px; border-radius: 20px; position: relative; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        .frame-year1 { background: var(--y1-grad); border: 2px solid #7dd3fc; }
+        .frame-year2 { background: var(--y2-grad); border: 2px solid #86efac; }
+        .frame-year3 { background: var(--y3-grad); border: 2px solid #fcd34d; }
+        .emoji-bg { position: absolute; top: -10px; right: -10px; font-size: 80px; opacity: 0.1; transform: rotate(15deg); }
+        textarea { width: 100%; border: none; background: rgba(255,255,255,0.7); padding: 15px; border-radius: 12px; font-family: 'Courier New', monospace; font-size: 1rem; min-height: 120px; box-sizing: border-box; }
+        .insight-box { margin-top: 15px; padding: 12px; background: white; border-radius: 10px; display: none; border-left: 5px solid var(--gold); }
+        .controls { display: flex; gap: 10px; margin-top: 15px; }
+        .btn-action { flex: 1; padding: 12px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-video { background: #ff4757; color: white; text-decoration: none; }
+        .btn-ss { background: #5758bb; color: white; }
     </style>
 </head>
 <body>
 
 <div id="splash">
-    <h1 style="font-size: 2.5rem;">JANGAN MENYERAH!!! 🔥</h1>
-    <p style="font-size: 1.2rem; max-width: 600px;">"Perjalanan seribu mil dimulai dengan satu langkah kecil. Tetaplah konsisten!"</p>
-    <button class="btn-start" onclick="startApp()">MULAI SEKARANG</button>
+    <div style="font-size: 60px;">🗝️</div>
+    <h1>INVESTOR MASTER PLAN</h1>
+    <p>Gunakan Clue untuk Membuka Level Berikutnya.</p>
+    <button class="btn-start" onclick="startApp()">MULAI JURNAL</button>
 </div>
 
 <div class="container">
     <div class="tab-nav">
-        <button id="btn-y1" class="tab-btn active" onclick="openTab(event, 'year1')">TAHUN 1</button>
-        <button id="btn-y2" class="tab-btn disabled" onclick="verifyProgress(event, 'year2')">TAHUN 2 🔒</button>
-        <button id="btn-y3" class="tab-btn disabled" onclick="verifyProgress(event, 'year3')">TAHUN 3 🔒</button>
+        <button id="btn-year1" class="tab-btn active" onclick="openTab(event, 'year1')">TAHUN 1 🌱</button>
+        <button id="btn-year2" class="tab-btn locked" onclick="verifyLevel(event, 'year2')">TAHUN 2 🔒</button>
+        <button id="btn-year3" class="tab-btn locked" onclick="verifyLevel(event, 'year3')">TAHUN 3 🔒</button>
     </div>
 
-    <div class="progress-container">
-        <progress id="mainProgress" value="0" max="100"></progress>
-        <p id="progressLabel" style="font-weight: bold; margin-top: 10px; font-size: 1.1rem; color: var(--primary);">Total Progress Belajar: 0%</p>
-    </div>
-
-    <div id="year1" class="content active">
-        <h2 style="color: var(--primary); border-bottom: 2px solid #eee; padding-bottom: 10px;">Tahun 1: Membangun Fondasi & Literasi</h2>
+    <div id="year1" class="content-tab" style="display:block;">
         <div id="tasks-year1"></div>
     </div>
-
-    <div id="year2" class="content">
-        <div id="lock2" class="lock-msg">🔒 Terkunci. Tersisa <span id="days2">...</span> hari belajar di Tahun 1.</div>
-        <div id="body-year2" style="display:none">
-            <h2 style="color: var(--primary); border-bottom: 2px solid #eee; padding-bottom: 10px;">Tahun 2: Analisis Fundamental & Valuasi</h2>
-            <div id="tasks-year2"></div>
-        </div>
+    <div id="year2" class="content-tab">
+        <div id="tasks-year2"></div>
     </div>
-
-    <div id="year3" class="content">
-        <div id="lock3" class="lock-msg">🔒 Terkunci. Tersisa <span id="days3">...</span> hari belajar di Tahun 2.</div>
-        <div id="body-year3" style="display:none">
-            <h2 style="color: var(--primary); border-bottom: 2px solid #eee; padding-bottom: 10px;">Tahun 3: Portfolio Pro & Financial Freedom</h2>
-            <div id="tasks-year3"></div>
-        </div>
+    <div id="year3" class="content-tab">
+        <div id="tasks-year3"></div>
     </div>
 </div>
 
 <script>
     const curriculum = {
         year1: [
-            { t: "Bulan 1: Logika Kepemilikan Bisnis", q: "Selalu konsisten!", u: "Saham adalah bukti sah kepemilikan bisnis nyata.", v: "tQXX-npOeUY" },
-            { t: "Bulan 2: Psikologi & Uang Dingin", q: "Ketenangan adalah aset.", u: "Jangan gunakan uang panas untuk investasi.", v: "MXj1oSUEVv8" },
-            { t: "Bulan 3: Bursa Efek & Legalitas OJK", q: "Keamanan itu nomor satu.", u: "Pastikan broker terdaftar OJK.", v: "AtL8aVvgK4U" },
-            { t: "Bulan 4: Mengenal 11 Sektor Saham", q: "Pahami medannya!", u: "Setiap sektor punya siklus berbeda.", v: "ir625-6bSSI" },
-            { t: "Bulan 5: Dividen vs Capital Gain", q: "Tanam & Tuai hasilnya.", u: "Dua cara investor mendapatkan keuntungan.", v: "7enFJSZgqE0" },
-            { t: "Bulan 6: Cara Baca Order Book & Bid-Offer", q: "Jangan terpancing harga!", u: "Fokus pada fundamental, bukan running trade.", v: "AtL8aVvgK4U" },
-            { t: "Bulan 7: Laporan Laba Rugi", q: "Cek profitnya!", u: "Laba bersih yang naik mencerminkan bisnis bagus.", v: "tQXX-npOeUY" },
-            { t: "Bulan 8: Neraca (Aset & Hutang)", q: "Kekuatan modal adalah kunci.", u: "Hindari perusahaan yang hutangnya terlalu menumpuk.", v: "MXj1oSUEVv8" },
-            { t: "Bulan 9: Arus Kas (Cashflow)", q: "Uang tunai adalah Raja!", u: "Profit tanpa cashflow hanyalah angka di atas kertas.", v: "ir625-6bSSI" }
+            { t: "Bulan 1: Logika Kepemilikan Bisnis", q: "Milikilah bisnisnya!", u: "Saham = Bukti Sah.", v: "2M30vXoIe3s", e: "🌱" },
+            { t: "Bulan 4: Mengenal 11 Sektor Saham", q: "Pahami Sektornya!", u: "Clue Tahun 2 ada di video ini.", v: "ir625-6bSSI", e: "🏗️" },
+            { t: "Bulan 9: Arus Kas (Cashflow)", q: "The King!", u: "Clue Tahun 3 ada di video ini.", v: "D_U48-qGf9k", e: "💰" }
         ],
-        year2: [
-            { t: "Bulan 13: Valuasi PER & PBV", q: "Beli murah, jual wajar.", u: "Menghitung harga murah atau mahal sebuah saham.", v: "tQXX-npOeUY" },
-            { t: "Bulan 14: Nilai Intrinsik (DCF)", q: "Melihat masa depan.", u: "Menghitung nilai riil bisnis hari ini.", v: "AtL8aVvgK4U" }
-        ],
-        year3: [
-            { t: "Bulan 25: Portfolio Rebalancing", q: "Jaga keseimbangan.", u: "Mengatur ulang porsi saham agar tetap aman.", v: "7enFJSZgqE0" },
-            { t: "Bulan 36: Dividen Freedom", q: "Selamat! Kamu sampai.", u: "Hidup dari bagi hasil laba perusahaan.", v: "tQXX-npOeUY" }
-        ]
+        year2: [{ t: "Bulan 13: Valuasi Saham", q: "Beli Murah!", u: "Hitung harga wajar.", v: "tQXX-npOeUY", e: "📈" }],
+        year3: [{ t: "Bulan 25: Financial Freedom", q: "Selamat!", u: "Hasil kesabaranmu.", v: "7enFJSZgqE0", e: "👑" }]
     };
 
-    const KEYS = { year2: "saham adalah bisnis", year3: "sabar adalah kunci" };
-    const SUMMARIES = {
-        year2: "RINGKASAN TAHUN 1:\n- Saham = Bisnis Nyata.\n- Psikologi > Analisis.\n- Laporan Keuangan adalah kompas.",
-        year3: "RINGKASAN TAHUN 2:\n- Valuasi adalah kunci agar tidak terjebak harga mahal.\n- Fokus pada perusahaan berkualitas dengan harga wajar."
+    const QUIZ = {
+        year2: { q: "KUIS TAHUN 2:\n\nCLUE: Masukkan angka 'Total Sektor Saham' yang dibahas di video Bulan 4.", a: "11" },
+        year3: { q: "KUIS TAHUN 3:\n\nCLUE: Masukkan istilah 2 kata untuk 'Raja' di video Bulan 9.", a: "arus kas" }
     };
 
     function startApp() {
-        if (!localStorage.getItem('studyStart')) localStorage.setItem('studyStart', new Date().getTime());
         document.getElementById('splash').style.display = 'none';
         renderTasks();
-        checkLocks();
+        checkUnlockStatus();
     }
 
     function renderTasks() {
         ['year1', 'year2', 'year3'].forEach(year => {
             const container = document.getElementById('tasks-' + year);
-            if(container) container.innerHTML = curriculum[year].map((item, i) => `
+            if(!container) return;
+            container.innerHTML = curriculum[year].map((item, i) => `
                 <div class="task-row">
-                    <div class="task-main">
-                        <div class="task-info"><input type="checkbox" class="cb" id="cb-${year}-${i}" onchange="updateUI()"> <b>${item.t}</b></div>
-                        <div><a href="https://www.youtube.com/watch?v=${item.v}" target="_blank" class="btn-video">📺 Video</a>
-                        <button class="btn-note" onclick="toggle('n-${year}-${i}')">📝 Catatan</button></div>
-                    </div>
-                    <div class="gift-container" id="g-${year}-${i}">
-                        <div class="gift-icon" onclick="toggle('gc-${year}-${i}')">🎁</div>
-                        <div id="gc-${year}-${i}" class="gift-content">
-                            <span class="quote">"${item.q}"</span>
-                            <div><b>Inti Materi:</b> ${item.u}</div>
+                    <div id="cap-${year}-${i}" class="snapshot-card frame-${year}">
+                        <div class="emoji-bg">${item.e}</div>
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                            <h3 style="margin:0;">${item.t}</h3>
+                            <input type="checkbox" class="cb" id="cb-${year}-${i}" onchange="updateUI()">
+                        </div>
+                        <textarea id="n-${year}-${i}" oninput="saveData()" placeholder="Tuliskan insight penting dari video..."></textarea>
+                        <div class="insight-box" id="g-${year}-${i}">
+                            <div style="font-weight:bold; color:var(--secondary);">✨ Insight:</div>
+                            <div style="font-style:italic;">"${item.q}"</div>
+                            <div style="font-size:0.8rem;">${item.u}</div>
                         </div>
                     </div>
-                    <textarea id="n-${year}-${i}" oninput="saveData()" placeholder="Apa hal terpenting yang kamu pelajari hari ini?"></textarea>
+                    <div class="controls">
+                        <a href="https://www.youtube.com/watch?v=${item.v}" target="_blank" class="btn-action btn-video">📺 Nonton Video</a>
+                        <button class="btn-action btn-ss" onclick="takeSnapshot('cap-${year}-${i}', '${item.t}')">📸 Snapshot Catatan</button>
+                    </div>
                 </div>
             `).join('');
         });
         loadData();
     }
 
-    function verifyProgress(evt, yearId) {
-        const start = parseInt(localStorage.getItem('studyStart'));
-        const days = Math.floor((new Date().getTime() - start) / (1000 * 60 * 60 * 24));
-        const limit = yearId === 'year2' ? 180 : 360;
-
-        if (days < limit) {
-            alert(`Terkunci! Kurang ${limit - days} hari lagi. Belajarlah dengan relax.`);
-            return;
-        }
-
-        if (localStorage.getItem(yearId + '_validated')) {
-            openTab(evt, yearId);
-            return;
-        }
-
-        let choice = prompt("Pemeriksaan Pemahaman:\n1. Ya, saya sudah paham materi sebelumnya.\n2. Tidak, saya butuh belajar lagi.\n3. Jelaskan ringkasan materi sebelumnya.");
+    function verifyLevel(evt, levelId) {
+        if (localStorage.getItem(levelId + '_unlocked')) { openTab(evt, levelId); return; }
         
-        if (choice === "1") {
-            let key = prompt(`Masukkan Kunci Mindset untuk ${yearId}:`);
-            if (key && key.toLowerCase() === KEYS[yearId]) {
-                alert("Verifikasi Berhasil! Selamat datang di jenjang berikutnya.");
-                localStorage.setItem(yearId + '_validated', 'true');
-                openTab(evt, yearId);
-            } else { alert("Kunci Mindset salah!"); }
-        } else if (choice === "2") {
-            alert("Bagus! Jangan terburu-buru. Ulangi materi tahun sebelumnya sampai benar-benar paham.");
-        } else if (choice === "3") {
-            alert(SUMMARIES[yearId]);
-            verifyProgress(evt, yearId);
+        let answer = prompt(QUIZ[levelId].q);
+        if (answer && answer.toLowerCase() === QUIZ[levelId].a) {
+            alert("BENAR! Gerbang Terbuka. Selamat Belajar! 🚀");
+            localStorage.setItem(levelId + '_unlocked', 'true');
+            checkUnlockStatus();
+            openTab(evt, levelId);
+        } else {
+            alert("SALAH! Tonton kembali videonya untuk mencari jawabannya.");
         }
+    }
+
+    function takeSnapshot(id, title) {
+        const el = document.getElementById(id);
+        html2canvas(el, { scale: 2 }).then(canvas => {
+            const link = document.createElement('a');
+            link.download = `Insight_${title}.png`;
+            link.href = canvas.toDataURL();
+            link.click();
+        });
     }
 
     function openTab(evt, id) {
-        document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.content-tab').forEach(c => c.style.display = 'none');
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
+        document.getElementById(id).style.display = 'block';
         evt.currentTarget.classList.add('active');
     }
 
-    function toggle(id) {
-        const el = document.getElementById(id);
-        el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+    function checkUnlockStatus() {
+        if (localStorage.getItem('year2_unlocked')) document.getElementById('btn-year2').classList.remove('locked');
+        if (localStorage.getItem('year3_unlocked')) document.getElementById('btn-year3').classList.remove('locked');
     }
 
     function updateUI() {
-        const cbs = document.querySelectorAll('.cb');
-        const checked = document.querySelectorAll('.cb:checked').length;
-        const progress = Math.round((checked / cbs.length) * 100);
-        document.getElementById('mainProgress').value = progress;
-        document.getElementById('progressLabel').innerText = `Total Progress Belajar: ${progress}%`;
-        
-        cbs.forEach(cb => {
+        document.querySelectorAll('.cb').forEach(cb => {
             const gift = document.getElementById(cb.id.replace('cb-', 'g-'));
             if(gift) gift.style.display = cb.checked ? 'block' : 'none';
         });
         saveData();
     }
 
-    function checkLocks() {
-        const start = parseInt(localStorage.getItem('studyStart'));
-        const days = Math.floor((new Date().getTime() - start) / (1000 * 60 * 60 * 24));
-        if (days >= 180) { document.getElementById('btn-y2').classList.remove('disabled'); document.getElementById('lock2').style.display='none'; document.getElementById('body-year2').style.display='block'; }
-        else { document.getElementById('days2').innerText = 180 - days; }
-        if (days >= 360) { document.getElementById('btn-y3').classList.remove('disabled'); document.getElementById('lock3').style.display='none'; document.getElementById('body-year3').style.display='block'; }
-        else { document.getElementById('days3').innerText = 360 - days; }
-    }
-
     function saveData() {
         const data = {};
         document.querySelectorAll('.cb').forEach(cb => data[cb.id] = cb.checked);
         document.querySelectorAll('textarea').forEach(tx => data[tx.id] = tx.value);
-        localStorage.setItem('investor_mastery_vFinal', JSON.stringify(data));
+        localStorage.setItem('investor_mastery_v7_db', JSON.stringify(data));
     }
 
     function loadData() {
-        const saved = JSON.parse(localStorage.getItem('investor_mastery_vFinal'));
+        const saved = JSON.parse(localStorage.getItem('investor_mastery_v7_db'));
         if (saved) {
             for (let id in saved) {
                 const el = document.getElementById(id);
@@ -229,8 +174,6 @@
             updateUI();
         }
     }
-
-    window.onload = () => { if(localStorage.getItem('studyStart')) startApp(); };
 </script>
 </body>
 </html>
