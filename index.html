@@ -1,193 +1,155 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Roadmap Investor Saham - Tahun 1</title>
-
-  <!-- SEO basic -->
-  <meta name="description" content="Roadmap belajar investasi saham 1 tahun untuk pemula hingga mandiri">
-  <meta name="author" content="Roadmap Investor">
-
-  <style>
-    :root {
-      --primary: #2c3e50;
-      --secondary: #27ae60;
-      --accent: #3498db;
-      --bg: #f8f9fa;
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--primary);
-      margin: 0;
-      padding: 20px;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: auto;
-      background: white;
-      padding: 40px;
-      border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    }
-
-    .header {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-
-    .progress-container {
-      position: sticky;
-      top: 0;
-      background: white;
-      padding: 10px 0;
-      z-index: 100;
-    }
-
-    progress {
-      width: 100%;
-      height: 20px;
-      border-radius: 10px;
-    }
-
-    .quarter {
-      margin-bottom: 50px;
-      border-bottom: 2px dashed #eee;
-      padding-bottom: 20px;
-    }
-
-    .quarter-title {
-      background: var(--primary);
-      color: white;
-      padding: 10px 20px;
-      border-radius: 5px;
-      display: inline-block;
-    }
-
-    .month-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      margin-top: 20px;
-    }
-
-    .month-card {
-      background: #fff;
-      border: 1px solid #e1e4e8;
-      padding: 20px;
-      border-radius: 10px;
-      transition: 0.3s;
-    }
-
-    .month-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
-
-    h3 {
-      color: var(--secondary);
-      margin-top: 0;
-    }
-
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    li {
-      margin-bottom: 12px;
-      font-size: 0.95em;
-      display: flex;
-      align-items: flex-start;
-    }
-
-    input[type="checkbox"] {
-      margin-right: 12px;
-      margin-top: 4px;
-      cursor: pointer;
-    }
-
-    .task-tag {
-      font-size: 0.7em;
-      font-weight: bold;
-      background: #eee;
-      padding: 2px 6px;
-      border-radius: 3px;
-      margin-right: 8px;
-    }
-
-    footer {
-      text-align: center;
-      font-size: 0.8em;
-      opacity: 0.6;
-      margin-top: 40px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastery Saham - Tahun 1</title>
+    <style>
+        :root { --primary: #2c3e50; --secondary: #27ae60; --accent: #3498db; --bg: #f8f9fa; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--primary); margin: 0; padding: 20px; }
+        .container { max-width: 900px; margin: auto; background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .header { text-align: center; margin-bottom: 40px; }
+        .progress-container { sticky: top; background: white; padding: 10px 0; position: sticky; top: 0; z-index: 100; }
+        progress { width: 100%; height: 20px; border-radius: 10px; }
+        .quarter { margin-bottom: 50px; border-bottom: 2px dashed #eee; padding-bottom: 20px; }
+        .quarter-title { background: var(--primary); color: white; padding: 10px 20px; border-radius: 5px; display: inline-block; }
+        .month-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px; }
+        .month-card { background: #fff; border: 1px solid #e1e4e8; padding: 20px; border-radius: 10px; transition: 0.3s; }
+        .month-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        h3 { color: var(--secondary); margin-top: 0; }
+        ul { list-style: none; padding: 0; }
+        li { margin-bottom: 12px; font-size: 0.95em; display: flex; align-items: flex-start; }
+        input[type="checkbox"] { margin-right: 12px; margin-top: 4px; cursor: pointer; }
+        .task-tag { font-size: 0.7em; font-weight: bold; background: #eee; padding: 2px 6px; border-radius: 3px; margin-right: 8px; vertical-align: middle; }
+    </style>
 </head>
 <body>
 
 <div class="container">
-  <div class="header">
-    <h1>Roadmap Investor Saham: Tahun ke-1</h1>
-    <p>Konsistensi: 2 Video Edukasi/Minggu + 1 Praktik</p>
-  </div>
-
-  <div class="progress-container">
-    <label>Total Progres:</label>
-    <progress id="progressBar" value="0" max="100"></progress>
-  </div>
-
-  <!-- ===== KONTEN ROADMAP (SAMA SEPERTI PUNYAMU) ===== -->
-  <!-- (dipersingkat di sini agar fokus fitur, struktur tetap sama) -->
-
-  <div class="quarter">
-    <h2 class="quarter-title">Kuartal 1</h2>
-    <div class="month-grid">
-      <div class="month-card">
-        <h3>Bulan 1</h3>
-        <ul>
-          <li><input type="checkbox" data-id="m1"> Konsep Kepemilikan Bisnis</li>
-          <li><input type="checkbox" data-id="m2"> Cara Kerja Bursa</li>
-          <li><input type="checkbox" data-id="m3"> Risiko vs Keuntungan</li>
-        </ul>
-      </div>
+    <div class="header">
+        <h1>Roadmap Investor Saham: Tahun ke-1</h1>
+        <p>Konsistensi: 2 Video Edukasi/Minggu + 1 Tugas Praktik</p>
     </div>
-  </div>
 
-  <footer>
-    © 2026 Roadmap Investor • GitHub Pages Ready
-  </footer>
+    <div class="progress-container">
+        <label>Total Progres Tahun ke-1:</label>
+        <progress id="file" value="0" max="100"></progress>
+    </div>
+
+    <div class="quarter">
+        <h2 class="quarter-title">Kuartal 1: Perkenalan & Mekanisme</h2>
+        <div class="month-grid">
+            <div class="month-card">
+                <h3>Bulan 1: Mindset</h3>
+                <ul>
+                    <li><input type="checkbox"> <span class="task-tag">M1</span> Konsep Kepemilikan Bisnis</li>
+                    <li><input type="checkbox"> <span class="task-tag">M2</span> Cara Kerja Bursa & Broker</li>
+                    <li><input type="checkbox"> <span class="task-tag">M3</span> Risiko vs Keuntungan</li>
+                    <li><input type="checkbox"> <span class="task-tag">M4</span> Pengenalan 11 Sektor BEI</li>
+                </ul>
+            </div>
+            <div class="month-card">
+                <h3>Bulan 2: Tools</h3>
+                <ul>
+                    <li><input type="checkbox"> <span class="task-tag">M5</span> Memilih Sekuritas Terbaik</li>
+                    <li><input type="checkbox"> <span class="task-tag">M6</span> Cara Baca Running Trade</li>
+                    <li><input type="checkbox"> <span class="task-tag">M7</span> Memasang Order (Buy/Sell)</li>
+                    <li><input type="checkbox"> <span class="task-tag">M8</span> Mengatur Watchlist</li>
+                </ul>
+            </div>
+            <div class="month-card">
+                <h3>Bulan 3: Psikologi Dasar</h3>
+                <ul>
+                    <li><input type="checkbox"> <span class="task-tag">M9</span> Mengatur Uang Dingin</li>
+                    <li><input type="checkbox"> <span class="task-tag">M10</span> Kenapa Harga Naik/Turun?</li>
+                    <li><input type="checkbox"> <span class="task-tag">M11</span> Efek Berita vs Fakta</li>
+                    <li><input type="checkbox"> <span class="task-tag">M12</span> Simulasi Trading (Virtual)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="quarter">
+        <h2 class="quarter-title" style="background: #27ae60;">Kuartal 2: Analisis Fundamental Dasar</h2>
+        <div class="month-grid">
+            <div class="month-card">
+                <h3>Bulan 4: Laporan Keuangan 1</h3>
+                <ul>
+                    <li><input type="checkbox"> <span class="task-tag">M13</span> Apa itu Annual Report?</li>
+                    <li><input type="checkbox"> <span class="task-tag">M14</span> Membaca Laporan Laba Rugi</li>
+                    <li><input type="checkbox"> <span class="task-tag">M15</span> Memahami Pendapatan (Revenue)</li>
+                    <li><input type="checkbox"> <span class="task-tag">M16</span> Mencari Laba Bersih (Net Profit)</li>
+                </ul>
+            </div>
+            <div class="month-card">
+                <h3>Bulan 5: Laporan Keuangan 2</h3>
+                <ul>
+                    <li><input type="checkbox"> <span class="task-tag">M17</span> Apa itu Neraca (Balance Sheet)?</li>
+                    <li><input type="checkbox"> <span class="task-tag">M18</span> Aset vs Hutang (Liabilitas)</li>
+                    <li><input type="checkbox"> <span class="task-tag">M19</span> Menilai Modal (Ekuitas)</li>
+                    <li><input type="checkbox"> <span class="task-tag">M20</span> Arus Kas (Cash Flow)</li>
+                </ul>
+            </div>
+            <div class="month-card">
+                <h3>Bulan 6: Rasio Penting</h3>
+                <ul>
+                    <li><input type="checkbox"> <span class="task-tag">M21</span> Valuasi: PER & PBV</li>
+                    <li><input type="checkbox"> <span class="task-tag">M22</span> Profitabilitas: ROE & GPM</li>
+                    <li><input type="checkbox"> <span class="task-tag">M23</span> Kesehatan Hutang: DER</li>
+                    <li><input type="checkbox"> <span class="task-tag">M24</span> Dividen Yield & Payout Ratio</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="quarter">
+        <h2 class="quarter-title" style="background: #e67e22;">Kuartal 3: Strategi & Teknikal Dasar</h2>
+        <p><i>Fokus: Mencari waktu yang tepat untuk membeli dan manajemen risiko.</i></p>
+        <div class="month-grid">
+            <div class="month-card">
+                <h3>Bulan 7-9</h3>
+                <ul>
+                    <li><input type="checkbox"> Cara Baca Grafik (Candlestick)</li>
+                    <li><input type="checkbox"> Support & Resistance</li>
+                    <li><input type="checkbox"> Strategi Dollar Cost Averaging</li>
+                    <li><input type="checkbox"> Menghitung Risk to Reward</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="quarter">
+        <h2 class="quarter-title" style="background: #e74c3c;">Kuartal 4: Portofolio & Review</h2>
+        <p><i>Fokus: Menyusun "Keranjang" saham sendiri dan evaluasi.</i></p>
+        <div class="month-grid">
+            <div class="month-card">
+                <h3>Bulan 10-12</h3>
+                <ul>
+                    <li><input type="checkbox"> Diversifikasi vs Konsentrasi</li>
+                    <li><input type="checkbox"> Cara Rebalancing Portofolio</li>
+                    <li><input type="checkbox"> Review Kinerja 1 Tahun</li>
+                    <li><input type="checkbox"> Menyusun Plan Tahun ke-2</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script>
-  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-  const progressBar = document.getElementById('progressBar');
-
-  // LOAD PROGRESS
-  checkboxes.forEach(cb => {
-    const saved = localStorage.getItem(cb.dataset.id);
-    if (saved === 'true') cb.checked = true;
-  });
-
-  function updateProgress() {
-    const checked = document.querySelectorAll('input[type="checkbox"]:checked').length;
-    const total = checkboxes.length;
-    progressBar.value = (checked / total) * 100;
-  }
-
-  updateProgress();
-
-  // SAVE PROGRESS
-  checkboxes.forEach(cb => {
-    cb.addEventListener('change', () => {
-      localStorage.setItem(cb.dataset.id, cb.checked);
-      updateProgress();
+    // Script sederhana untuk progres bar
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const progressBar = document.getElementById('file');
+    
+    checkboxes.forEach(cb => {
+        cb.addEventListener('change', () => {
+            const checked = document.querySelectorAll('input[type="checkbox"]:checked').length;
+            const total = checkboxes.length;
+            progressBar.value = (checked / total) * 100;
+        });
     });
-  });
 </script>
 
 </body>
 </html>
+
